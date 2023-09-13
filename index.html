@@ -3,15 +3,28 @@
 
 <link rel="icon" type="image/x-icon" href="/res/sully.png">
 
-<h1 style = "font-family: Arial;">michael corduroy</h1>
+<h1  class = "dropdown-text" style="font-family: Arial; font-size: 70px;">michael corduroy</h1>
 
-<a id = "aspartame" href = "daily-aspartame">aspartame</a>
 
-<script>
-  var x = Math.floor(Math.random() * 600);
-  var y = Math.floor(Math.random() * 600);
-  alert(x);
-  var asp_link = document.getElementById("aspartame");
-  asp_link = document.style.position = "absolute";
-  asp_link.style.left = x;
-</script>
+
+
+<style>
+  .dropdown-text {
+      position: relative;
+  }
+
+  .dropdown-text:hover::before {
+      content: "Bad Ideas©";
+      display: block;
+      position: absolute;
+      padding: 10px;
+      top: 100%;
+      left: 0;
+      z-index: 1;
+      font-size: 20px;
+  }
+</style>
+
+<body>
+
+</body>
