@@ -73,7 +73,7 @@
     </style>
 </head>
 <body>
-    <h1 id="dropdown-text" style="font-family: Arial; font-size: 70px;">michaelcorduroy.com</h1>
+    <h1 id="dropdown-text" style="font-family: Arial; font-size: 70px;" onclick="meep()">michaelcorduroy.com</h1>
     <div id="colorPalette"></div>
     
     <div id="games">
@@ -89,8 +89,20 @@
         </a>
         <a href="gallery.html" style="font-family: Courier New;">gallery</a>
     </div>
-    <script>
-        const colors = ['#000000', '#808080', '#C0C0C0', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FFA500', '#FFC0CB', '#800080', '#008080', '#008000', '#FFD700', '#A52A2A', '#4B0082'];
+<script>
+      
+  const colors = ['#000000', '#808080', '#C0C0C0', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FFA500', '#FFC0CB', '#800080', '#008080', '#008000', '#FFD700', '#A52A2A', '#4B0082'];
+
+
+
+  var games = document.getElementById("games");
+  var  gallery = document.getElementById("gallery");
+  var shambles = [games, gallery];
+
+
+ 
+
+
 
 
 
@@ -110,7 +122,7 @@ function setColor(color) {
     colorPicker.value = color;
 }
     </script>
-    <canvas id="canvas" width="1300" height="800"></canvas>
+    <canvas id="canvas" width="1350" height="800"></canvas>
     <input type="color" id="colorPicker">
   
     <script>
@@ -122,10 +134,17 @@ let drawing = false;
 
 
 
+  function drawIcons() {
+    for (let i = 0; i < shambles.length; i++) {
+      var icon = shambles[i];
+      var x = Math.random() * (300) + 100;
+      var y = Math.random() * (100) + 100 
+      icon.style.left = x + 'px';
+      icon.style.top = y + 'px';
+  }
+}
 
-
-
-games = document.getElementById("games");
+drawIcons();
 
 
 
