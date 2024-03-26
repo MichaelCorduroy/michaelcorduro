@@ -1,0 +1,82 @@
+
+<body style="background-color: black">
+<center>
+    <video id = "med" style="width: 475px; height: 259;" src = "res/mks3.mp4" controls="false" autoplay muted loop></video>
+    <h3 style="font-family: Helvetica; color: yellow;" id = "storyText"></h3>
+
+    <button id="playnow" onclick="game()">Play Now</button>
+</center>
+
+
+</body>
+
+<script>
+
+    const storyText = document.getElementById("storyText");
+
+    let video = document.getElementById("med");
+        video.controls = false;
+
+    let playnow = document.getElementById("playnow");
+
+    const meditationScript = [
+    ["Welcome to this guided meditation.", 6],
+    ["Find a comfortable position, either sitting or lying down.", 8],
+    ["Close your eyes gently, or soften your gaze if you prefer.", 8],
+    ["Take a few deep breaths in through your nose, filling your belly with air.", 10],
+    ["Hold your breath for a moment, and then slowly exhale through your mouth.",10],
+    ["Repeat this breathing cycle for a few minutes, allowing your body to relax with each breath.",12],
+    ["As you breathe, focus on any tension you might be holding in your body.",8],
+    ["Starting with your toes, gently release any tightness you feel.",8],
+    ["Move your awareness up your legs, releasing tension in your calves, thighs, and hips.",9],
+    ["Continue releasing tension in your lower back, abdomen, and chest.",8],
+    ["Let go of any tension in your shoulders, neck, and face.",7],
+    ["Now, allow your mind to become still. If thoughts arise, simply acknowledge them and gently bring your attention back to your breath.",14],
+    ["Imagine yourself in a peaceful place, surrounded by calming sights and sounds.",10],
+    ["Spend some time in this peaceful place, soaking in the tranquility.",9],
+    ["When you're ready, slowly begin to bring your awareness back to your surroundings.",12],
+    ["Wiggle your fingers and toes, and take a few deep breaths.",9],
+    ["Gently open your eyes, feeling refreshed and renewed.",8],
+    ["Thank yourself for taking this time for meditation.",8],
+    ["May you carry this sense of peace and calm with you throughout your day.",10],
+  ];
+
+
+    function game(){
+
+        let currentTempo = 0; // Use a separate variable inside the function
+        playnow.style.display = "none";
+
+        function displayNextPhrase() {
+      if (currentTempo < meditationScript.length) {
+        storyText.textContent = meditationScript[currentTempo][0]; // Assuming story holds phrases directly
+        currentTempo++;
+        setTimeout(displayNextPhrase, meditationScript[currentTempo][1] * 1000);
+      }
+    }
+      displayNextPhrase(); // Start the sequence
+  
+
+    }
+
+  </script>
+
+<style>
+    #playnow{
+        border-radius: 1px;
+    }
+
+    #playnow {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: -5px;
+    
+  }
+</style> 
+
+
+

@@ -1,0 +1,61 @@
+
+
+<link rel="icon" type="image/x-icon" href="/res/sully.png">
+
+
+<body style="font-family: Courier; font-weight: 200;">
+<div style="height: 10px;"><a style="font-size: 12px;" href="index.html">home</a></div>
+<h5 style="font-weight: 50;">Robotic Series: Deathbot (2024)</h5>
+<div id = contain>
+<video  width = "100%" id = "machineDisplay" src="res/deathbot.mov"  controls="false" autoplay muted loop></video>
+    </div>
+<div style="height: 650px;"></div>
+<p style="font-weight: 50; font-size: 12px;"> Crafted from a marriage of woods, metals, and plastics, this unsettlingly 
+rigid parody of a human limb twitches against its restraints, as programmed. Bound by industrial grade
+duct tape, it swings a sharp kitchen blade, rhythmically cutting into its binding, a counterpoint to the 
+desperate futility of the action. This kinetic scupture, informally called "Cut Loose", explores the potential 
+anxieties of advancing technology. Trapped in a mechanical struggle by its programming, it asks the observer,
+could technology one day turn its ingenuity against the very restraints we place upon them?</p>
+
+</body>
+<div style="height: 500px;"></div>
+<div style="height: 10px; text-align: center;"><a style="font-size: 12px;" href="https://www.tiktok.com/@michaelcorduroy/video/7348190896183069995?is_from_webapp=1&sender_device=pc&web_id=7112508209977886251">tiktok</a></div>
+
+<style>
+    body{
+        
+    }
+
+    #machineDisplay{
+        position: absolute;
+        
+        left: 40%;
+        background-color: aqua;
+        object-fit: cover;
+        max-height: 600px;
+        
+
+    }
+    #contain{
+        position: absolute;
+        width: 800px;
+        height: 700px;
+        text-align: center;
+        
+    }
+</style>
+
+<script>
+    let video = document.getElementById("machineDisplay");
+        video.controls = false;
+
+    const scalingDiv = document.getElementById('machineDisplay');
+    const scrollPosition = window.scrollY; // Get current scroll position
+
+  // Define the scaling factor (adjust as needed)
+  const scalingFactor = 1 - scrollPosition / 800; // Scales down to 0 at 500px scroll
+
+  // Apply the scaling factor to width and height (use Math.max to prevent negative values)
+ 
+    
+</script>
