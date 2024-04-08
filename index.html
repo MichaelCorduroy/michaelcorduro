@@ -137,6 +137,36 @@
   object-fit: cover;  /* Stretch to fill container, maintaining aspect ratio */
 }
 
+    .forgetterWindow{
+        position: absolute;
+        top: 60%;
+        left: 70%;
+        z-index: 9;
+        width: 400px;
+        height: 300px;
+        
+    }
+    .forgetterWindowheader{
+      position: absolute;
+    padding: 10px;
+    width:500px;
+    height:40px;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+    opacity: 1;
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     </style>
@@ -154,6 +184,11 @@
         <div id="deathwindowheader">Click here to move</div>
         <img src="deathback.png" style="height: 350px;">
         <video onclick="window.location = 'deathbot.html'"  width = "100%" id = "machineDisplay" src="res/deathbot.mov"  controls="false" autoplay muted loop></video>
+      </div>
+
+      <div class = "window" id = "forgetterWindow" title="Need help remembering?">
+        <img src = "forgetter.png" style="height: 300px;">
+        <div id = "forgetterWindowheader" ">Click here to move</div>
       </div>
 
 
@@ -191,6 +226,7 @@ if (iframe.contentDocument.body.scrollHeight > iframe.clientHeight) {
 //Make the DIV element draggagle:
 dragElement(document.getElementById("mydiv"));
 dragElement(document.getElementById("deathwindow"));
+dragElement(document.getElementById("forgetterWindow"));
 
 //no videp controls
 let video = document.getElementById("machineDisplay");
