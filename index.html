@@ -82,7 +82,16 @@
         border: 1px solid #d3d3d3;
         text-align: center;
     }
-
+        #mydivheader {
+            position: absolute;
+            padding: 10px;
+            width:290px;
+            cursor: move;
+            z-index: 10;
+            background-color: #2196F3;
+            color: #fff;
+            opacity: 0;
+            }
     #deathwindow {
         position: absolute;
         top: 20%;
@@ -96,20 +105,11 @@
         text-align: center;
     }
 
-    #mydivheader {
-    position: absolute;
-    padding: 10px;
-    width:290px;
-    cursor: move;
-    z-index: 10;
-    background-color: #2196F3;
-    color: #fff;
-    opacity: 0;
-    }
+   
     #deathwindowheader {
     position: absolute;
     padding: 10px;
-    width:500px;
+    width:330px;
     height:40px;
     cursor: move;
     z-index: 10;
@@ -117,6 +117,18 @@
     color: #fff;
     opacity: 0;
     }
+
+
+    #machineDisplay{
+    position: absolute;
+    top: 35%;
+    left: 2%;
+    width: 110%;
+    height: 247px;  /* Allow height to adjust based on video */
+    object-fit: cover;  /* Stretch to fill container, maintaining aspect ratio */
+}
+
+
 
     #med-frame{
     position: absolute;
@@ -127,42 +139,26 @@
     transform: scale(0.75);
     }
 
-    #machineDisplay{
-    position: absolute;
-    top: 35%;
-    left: 2%;
     
-    width: 110%;
-  height: 247px;  /* Allow height to adjust based on video */
-  object-fit: cover;  /* Stretch to fill container, maintaining aspect ratio */
-}
-
-    .forgetterWindow{
+    #forgetterwindow{
         position: absolute;
-        top: 60%;
-        left: 70%;
-        z-index: 9;
-        width: 400px;
+        top: 15%;
+        left: 15%;
+        z-index: 8;
+        width: 500px;
         height: 300px;
         
     }
-    .forgetterWindowheader{
-      position: absolute;
+
+    #forgetterwindowheader{
+    position: absolute;
     padding: 10px;
-    width:500px;
-    height:40px;
+    width:550px;
+    height:20px;
     cursor: move;
-    z-index: 10;
-    background-color: #2196F3;
-    color: #fff;
-    opacity: 1;
+    z-index: 8;
+    opacity: 0;
     }
-
-
-
-
-
-
 
 
 
@@ -186,9 +182,9 @@
         <video onclick="window.location = 'deathbot.html'"  width = "100%" id = "machineDisplay" src="res/deathbot.mov"  controls="false" autoplay muted loop></video>
       </div>
 
-      <div class = "window" id = "forgetterWindow" title="Need help remembering?">
+      <div class = "window" id = "forgetterwindow" title="Need help remembering?" style="position: absolute;">
+        <div id = "forgetterwindowheader" style="background-color: blueviolet; position: absolute;">Crick here to move</div>
         <img src = "forgetter.png" style="height: 300px;">
-        <div id = "forgetterWindowheader" ">Click here to move</div>
       </div>
 
 
@@ -226,7 +222,7 @@ if (iframe.contentDocument.body.scrollHeight > iframe.clientHeight) {
 //Make the DIV element draggagle:
 dragElement(document.getElementById("mydiv"));
 dragElement(document.getElementById("deathwindow"));
-dragElement(document.getElementById("forgetterWindow"));
+dragElement(document.getElementById("forgetterwindow"));
 
 //no videp controls
 let video = document.getElementById("machineDisplay");
