@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-
-
-
-
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>michaelcorduroy</title>
@@ -34,14 +27,6 @@
             margin: 20px 0px;
             width: 35px;
             height: 35px;
-        }
-        #plsDraw{
-          animation: grow-shrink 1s ease-in-out alternate infinite !important;
-        }
-
-        @keyframes grow-shrink {
-          from { transform: scale(1.0); } /* Start at normal size */
-          to { transform: scale(1.1); } /* Grow to 110% size */
         }
         #toggleDrawingMode{
             position: absolute;
@@ -109,7 +94,7 @@
             }
     #deathwindow {
         position: absolute;
-        top: 17%;
+        top: 20%;
         left: 50%;
         z-index: 9;
         width: 300px;
@@ -176,31 +161,7 @@
     }
 
 
-    #icespicewindow {
-        position: absolute;
-        top: 55%;
-        left: 55%;
-        z-index: 8;
-        width: 300px;
-        height: 200px;
-        background-color: #f1f1f1;
-        text-align: center;
-        border: 1px solid #d3d3d3;
-        text-align: center;
-    }
 
-    #spiceDisplay{
-    position: absolute;
-    top: 8%;
-    left: 1%;
-    height: 226px;
-    width: 345px;
-    
-     /* Allow height to adjust based on video */
-    object-fit: cover;  /* Stretch to fill container, maintaining aspect ratio */
-}
-
-  
 
 
 
@@ -208,49 +169,28 @@
 </head>
 <body>
 
-    <img id="plsDraw" src= "pleasedraw.png" style="height: 60px; position: absolute; left: 3%; top: 1.5%;">
-    <div class = "window" id="mydiv" title="Guided Meditation: The Game">
-        <div id="mydivheader"  onclick="moveToTop(this.parentElement)">Click here to move</div>
+    <div class="window" id="mydiv" title="Guided Meditation: The Game" style="top: 169px; left: 181px;">
+        <div id="mydivheader">Click here to move</div>
         <img src="res/medbord.jpeg" style="height: 270px;">
-        <iframe  id = "med-frame" src="astral-meditation.html" title="Astral Meditation"></iframe> 
+        <iframe id="med-frame" src="astral-meditation.html" title="Astral Meditation"></iframe> 
       </div>
 
 
-      <div class = "window" id ="deathwindow" title="Robotic Series: Deathbot">
-        <div id="deathwindowheader" onclick="moveToTop(this.parentElement)">Click here to move</div>
+      <div class="window" id="deathwindow" title="Robotic Series: Deathbot" style="top: 299px; left: 448px;">
+        <div id="deathwindowheader">Click here to move</div>
         <img src="deathback.png" style="height: 350px;">
-        <video onclick="window.location = 'deathbot.html'"  width = "100%" id = "machineDisplay" src="res/deathbot.mov"  controls="false" autoplay muted loop></video>
+        <video onclick="window.location = 'deathbot.html'" width="100%" id="machineDisplay" src="res/deathbot.mov" autoplay="" muted="" loop=""></video>
       </div>
 
-      <div class = "window" id = "forgetterwindow" title="Need help remembering?" style="position: absolute;">
-        <div id = "forgetterwindowheader" style="background-color: blueviolet; position: absolute;">Crick here to move</div>
-        <img src = "forgetter.png" style="height: 300px;">
-      </div>
+      
 
 
-      <div class = "window" id = "icespicewindow" title="Ice Spice Racing" style="position: absolute;">
-        <div id = "icespicewindowheader" onclick="moveToTop(this.parentElement)" style="background-color: blueviolet; opacity: 0%; position: absolute; width: 350px; ">Crick here to move</div>
-        <img src = "res/icespiceback.png" style="height: 250px; width: 350px;">
-        <video width="100%" id = spiceDisplay src = "res/spice.mp4" controls = "false" autoplay muted loop></video>
-      </div>
-
-
-    <h1 id="dropdown-text" style="font-family: Arial; font-size: 70px;" onclick="meep()">michaelcorduroy.com</h1>
-    <div id="colorPalette"></div>
     
-    <div id="games">
-        <a href="games.html" class="overlay">
-            <img src="smile/gamecon.png" style="height: 100px;">
-        </a>
-        <a href="games.html" style="font-family: Courier New;">games</a>
-    </div>
+    
+    
+    
 <br>
-    <div id="gallery" class="overlay">
-        <a href="gallery.html">
-            <img src="smile/galcon.png" style="height: 100px;">
-        </a>
-        <a href="gallery.html" style="font-family: Courier New;">gallery</a>
-    </div>
+    
 <script>
       
   const colors = ['#000000', '#808080', '#C0C0C0', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FFA500', '#FFC0CB', '#800080', '#008080', '#008000', '#FFD700', '#A52A2A', '#4B0082'];
@@ -270,37 +210,24 @@ if (iframe.contentDocument.body.scrollHeight > iframe.clientHeight) {
 dragElement(document.getElementById("mydiv"));
 dragElement(document.getElementById("deathwindow"));
 dragElement(document.getElementById("forgetterwindow"));
-dragElement(document.getElementById("icespicewindow"));
 
-//no video controls
-let machineDisplay = document.getElementById("machineDisplay");
-machineDisplay.controls = false;
-
-let spiceDisplay = document.getElementById("spiceDisplay");
-spiceDisplay.controls = false;
-spiceDisplay.playbackRate = 2.0;
-
-
-//please draw thing idk
-let plsDraw = document.getElementById("plsDraw");
+//no videp controls
+let video = document.getElementById("machineDisplay");
+        video.controls = false;
 
 
 //onclick window move to front
 const windows = document.querySelectorAll('.window');
 
 // Add click event listener to each div
-function moveToTop(clickedWindow) {
-  // Set the z-index of the clicked window to a high value (e.g., 100)
-  clickedWindow.style.zIndex = 50;
+windows.forEach(div => {
+  window.addEventListener('click', function() {
+    // Set z-index of clicked div to a higher value (e.g., 10)
+    this.style.zIndex = 10;
+    alert("hey!");
+  });
+});
 
-  // (Optional) Loop through all other window elements and set their z-index to a lower value (e.g., 1)
-  var allWindows = document.querySelectorAll(".window");
-  for (var i = 0; i < allWindows.length; i++) {
-    if (allWindows[i] !== clickedWindow) {
-      allWindows[i].style.zIndex = 1;
-    }
-  }
-}
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   if (document.getElementById(elmnt.id + "header")) {
@@ -373,8 +300,8 @@ function setColor(color) {
     colorPicker.value = color;
 }
     </script>
-    <canvas id="canvas" width="1350" height="800"></canvas>
-    <input type="color" id="colorPicker">
+    
+    
   
     <script>
         const canvas = document.getElementById('canvas');
@@ -415,9 +342,6 @@ colorPicker.addEventListener('input', (e) => {
 
 canvas.addEventListener('mousemove', (e) => {
     if (drawing) {
-      if(plsDraw.style.display != "none"){
-        plsDraw.style.display = "none";
-      }
         ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
         ctx.lineWidth = 5;
         ctx.lineCap = 'round';
@@ -433,10 +357,11 @@ canvas.addEventListener('mouseup', () => {
 
 
    
-</body>
-</html>
 
 
 
 
 
+
+
+</body></html>
