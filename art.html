@@ -1,0 +1,141 @@
+<a href = "index.html"> < home </a>
+<p> i'm still collecting images of some recent work so for now make your own.</p>
+<br>
+<p> it probably only works on desktop sorry. i will never fix this.</p>
+<br>
+<br>
+
+    <link rel="icon" type="image/x-icon" href="/res/sully.png">
+    <style>
+        body {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+        }
+        #dropdown-text{
+            position: absolute;
+            margin: 30px 100px;
+        }
+        #colorPalette {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 60px 0px;
+        }
+        #colorPicker{
+            position: absolute;
+            margin: 20px 0px;
+            width: 35px;
+            height: 35px;
+        }
+        #toggleDrawingMode{
+            position: absolute;
+            margin: 700px 400x;
+        }
+        .colorSquare {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            border: 1px solid #000;
+            margin-bottom: 5px;
+        }
+        canvas {
+            position: absolute;
+            margin: 0px 74px;
+            border: 1px solid #000;
+        }
+
+        #content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 id="dropdown-text" style="font-family: Arial; font-size: 70px;">michaelcorduroy.com</h1>
+    <div id="colorPalette"></div>
+    
+   <script>
+        const colors = ['#000000', '#808080', '#C0C0C0', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FFA500', '#FFC0CB', '#800080', '#008080', '#008000', '#FFD700', '#A52A2A', '#4B0082'];
+
+
+
+colors.forEach(color => {
+    const colorSquare = document.createElement('div');
+    colorSquare.className = 'colorSquare';
+    colorSquare.style.backgroundColor = color;
+    colorSquare.addEventListener('click', () => setColor(color));
+    colorPalette.appendChild(colorSquare);
+});
+
+colorPicker.addEventListener('input', (e) => setColor(e.target.value));
+
+function setColor(color) {
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    colorPicker.value = color;
+}
+    </script>
+    <br>
+    <br>
+    <canvas id="canvas" width="1300" height="800"></canvas>
+    <input type="color" id="colorPicker">
+  
+    <script>
+        const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const colorPalette = document.getElementById('colorPalette');
+const colorPicker = document.getElementById('colorPicker');
+let drawing = false;
+
+
+
+
+
+
+games = document.getElementById("games");
+
+
+
+
+
+
+canvas.addEventListener('mousedown', (e) => {
+    drawing = true;
+    ctx.beginPath();
+    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+});
+
+colorPicker.addEventListener('input', (e) => {
+    ctx.strokeStyle = e.target.value;
+    ctx.fillStyle = e.target.value;
+});
+
+canvas.addEventListener('mousemove', (e) => {
+    if (drawing) {
+        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        ctx.lineWidth = 5;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+    }
+});
+
+canvas.addEventListener('mouseup', () => {
+    drawing = false;
+});
+
+    </script>
+
+
+   
+</body>
+</html>
+
+
+
+
+

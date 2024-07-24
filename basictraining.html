@@ -59,35 +59,32 @@
     <p>hi i'm michael. welcome to my website. have fun.</p>
     <nav>
       <ul>
-        <li><a href="projects.html">projects</a></li>
-        <li><a href="art.html">art</a></li>
-	<li><a href="about.html">about</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#art">art</a></li>
+	<li><a href="#about">about</a></li>
         <li><a href="#contact" id="toggle-animation">party mode</a></li>
       </ul>
     </nav>
   </header>
   <main>
-    
-	  <div>
-		  <p>[07-24-2024 12:01PM EST]</p>
-		  <center>
-		<p style = "font-family: Courier; font-weight: 50;">i hate when the culmination of 8 hours work runs into a paywall</p>
-	</div>
-
-
-
 	  <div>
 		  <p>[07-22-2024 4:44PM EST]</p>
 		  <center>
 		<img style = "height:400px" src = "res/stargate1.jpg">
 		<p style = "font-family: Courier; font-weight: 50;">stargate_1, home sweet home</p>
 	</div>
-
     <section id="contact">
-        <a href = "https://instagram.com/michaelcorduroy">ig</a> 
-        <a href = "https://x.com/michaelcorduroy">twt</a>
+      <h2>Contact</h2>
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <label for="message">Message:</label>
+        <textarea id="message" name="message"></textarea>
+        <button type="submit">Send</button>
+      </form>
     </section>
-
   </main>
   <footer>
 	  <center> <p>© 2024 michaelcorduroy</p></center>
@@ -112,5 +109,4 @@
   </script>
 </body>
 </html>
-
 

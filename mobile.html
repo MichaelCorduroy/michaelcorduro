@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>michaelcorduroy</title>
+    <link rel="icon" type="image/x-icon" href="/res/sully.png">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #dropdown-text {
+            margin: 20px;
+            font-size: 5vw;
+            text-align: center;
+        }
+
+        #colorPalette {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        #colorPicker {
+            margin: 10px 0;
+            width: 50px;
+            height: 50px;
+        }
+
+        #plsDraw {
+            animation: grow-shrink 1s ease-in-out alternate infinite !important;
+            height: 10vw;
+            position: absolute;
+            left: 3%;
+            top: 1.5%;
+        }
+
+        @keyframes grow-shrink {
+            from {
+                transform: scale(1.0);
+            }
+
+            to {
+                transform: scale(1.1);
+            }
+        }
+
+        .colorSquare {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            border: 1px solid #000;
+            margin: 5px;
+        }
+
+        canvas {
+            margin: 20px;
+            border: 1px solid #000;
+            width: 90vw;
+            height: auto;
+            max-width: 1350px;
+            max-height: 800px;
+        }
+
+        .window {
+            position: absolute;
+            background-color: #f1f1f1;
+            border: 1px solid #d3d3d3;
+            z-index: 9;
+            text-align: center;
+            max-width: 80%;
+            max-height: 80%;
+            overflow: hidden;
+        }
+
+        .window header {
+            padding: 10px;
+            cursor: move;
+            background-color: #2196F3;
+            color: #fff;
+        }
+
+        .window img,
+        .window video,
+        .window iframe {
+            width: 100%;
+            height: auto;
+        }
+
+        #games,
+        #gallery {
+            text-align: center;
+            margin: 10px;
+        }
+
+        @media (min-width: 600px) {
+            body {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            #dropdown-text {
+                font-size: 3vw;
+            }
+
+            #plsDraw {
+                height: 60px;
+            }
+
+            .window {
+                width: 300px;
+                height: 200px;
+            }
+
+            canvas {
+                width: 800px;
+                height: 600px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <img id="plsDraw" src="pleasedraw.png" alt="Please Draw">
+    <div class="window" id="mydiv" title="Guided Meditation: The Game">
+        <header onclick="moveToTop(this.parentElement)">Click here to move</header>
+        <img src="res/medbord.jpeg" alt="Guided Meditation">
+        <iframe id="med-frame" src="astral-meditation.html" title="Astral Meditation"></iframe>
+    </div>
+
+    <div class="window" id="deathwindow" title="Robotic Series: Deathbot">
+        <header onclick="moveToTop(this.parentElement)">Click here to move</header>
+        <img src="deathback.png" alt="Deathbot">
+        <video id="machineDisplay" src="res/deathbot.mov" autoplay muted loop></video>
+    </div>
+
+    <div class="window" id="forgetterwindow" title="Need help remembering?">
+        <header style="background-color: blueviolet;" onclick="moveToTop(this.parentElement)">Click here to move</header>
+        <img src="forgetter.png" alt="Need help remembering?">
+    </div>
+
+    <div class="window" id="icespicewindow" title="Ice Spice Racing">
+        <header style="background-color: blueviolet;" onclick="moveToTop(this.parentElement)">Click here to move</header>
+        <img src="res/icespiceback.png" alt="Ice Spice Racing">
+        <video id="spiceDisplay" src="res/spice.mp4" autoplay muted loop></video>
+    </div>
+
+    <h1 id="dropdown-text" onclick="meep()">michaelcorduroy.com</h1>
+    <div id="colorPalette"></div>
+    <div id="games">
+        <a href="games.html" class="overlay">
+            <img src="smile/gamecon.png" style="height: 100px;" alt="Games">
+        </a>
+        <a href="games.html" style="font-family: Courier New;">games</a>
+    </div>
+    <div id="gallery" class="overlay">
+        <a href="gallery.html">
+            <img src="smile/galcon.png" style="height: 100px;" alt="Gallery">
+        </a>
+        <a href="gallery.html" style="font-family: Courier New;">gallery</a>
+    </div>
+    <canvas id="canvas"></canvas>
+    <input type="color" id="colorPicker">
+
+    <script>
+        const colors = ['#000000', '#808080', '#C0C0C0', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FFA500', '#FFC0CB', '#800080', '#008080', '#008000', '#FFD700', '#A52A2A', '#4B0082'];
+        const colorPalette = document.getElementById('colorPalette');
+        const colorPicker = document.getElementById('colorPicker');
+        const ctx = document.getElementById('canvas').getContext('2d');
+        let currentColor = '#000000';
+
+        colors.forEach(color => {
+            const colorSquare = document.createElement('div');
+            colorSquare.className = 'colorSquare';
+            colorSquare.style.backgroundColor = color;
+            colorSquare.addEventListener('click', () => setColor(color));
+            colorPalette.appendChild(colorSquare);
+        });
+
+        colorPicker.addEventListener('input', (e) => setColor(e.target.value));
+
+        function setColor(color) {
+            currentColor = color;
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+        }
+
+        function moveToTop(clickedWindow) {
+            clickedWindow.style.zIndex = 50;
+            document.querySelectorAll('.window').forEach(win => {
+                if (win !== clickedWindow) win.style.zIndex = 2;
+            });
+        }
+
+        function dragElement(elmnt) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+            if (document.getElementById(elmnt.id + "header")) {
+                document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+            } else {
+                elmnt.onmousedown = dragMouseDown;
+            }
+
+            function dragMouseDown(e) {
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+
+        dragElement(document.getElementById("mydiv"));
+        dragElement(document.getElementById("deathwindow"));
+        dragElement(document.getElementById("forgetterwindow"));
+        dragElement(document.getElementById("icespicewindow"));
+    </script>
+</body>
+
+</html>

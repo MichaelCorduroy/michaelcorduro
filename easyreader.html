@@ -1,0 +1,51 @@
+<h1 id = "word"></h1>
+
+<button id = "start" onclick="read()">Start Reading</button>
+<script>
+    let playnow = document.getElementById("start");
+    var text = "Computers may be thought of as engines for transforming free energy into wasteheat and mathematical work. Existing electronic computers dissipate energyvastly in excess of the mean thermal energy kT, for purposes such as maintainingvolatile storage devices in a bistable condition, synchronizing and standardizingsignals, and maximizing switching speed. On the other hand, recent models dueto Fredkin and Toffoli show that in principle a computer could compute at finitespeed with zero energy dissipation and zero error. In these models, a simpleassemblage of simple but idealized mechanical parts (e.g., hard spheres and flatplates) determines a ballistic trajectory isomorphic with the desired computation,a trajectory therefore not foreseen in detail by the builder of the computer. In aclassical or semiclassical setting, ballistic models are unrealistic because theyrequire the parts to be assembled with perfect precision and isolated fromthermal noise, which would eventually randomize the trajectory and lead toerrors. Possibly quantum effects could be exploited to prevent this undesiredequipartition of the kinetic energy. Another family of models may be calledBrownian computers, because they allow thermal noise to influence the trajectoryso strongly that it becomes a random walk through the entire accessible (lowpotential-energy) portion of the computer's configuration space. In these computers, a simple assemblage of simple parts determines a low-energy labyrinthisomorphic to the desired computation, through which the system executes itsrandom walk, with a slight drift velocity due to a weak driving force in thedirection of forward computation. In return for their greater realism, Brownianmodels are more dissipative than ballistic ones: the drift velocity is proportionalto the driving force, and hence the energy dissipated approaches zero only in thelimit of zero speed. In this regard Brownian models resemble the traditionalapparatus of thermodynamic thought experiments, where reversibility is alsotypically only attainable in the limit of zero speed."
+    var word = document.getElementById("word");
+    let words = text.split(' ');
+
+    var reading = false;
+   
+    let currentTempo = 0;
+        
+    function read(){
+        if(!reading){
+            reading = true;
+            playnow.textContent = "Pause";
+            displayNextPhrase();
+        }
+
+        else if(reading && currentTempo > 0){
+            playnow.textContent = "Continue Reading";
+            reading = false;
+        }
+    }
+    
+        
+       function displayNextPhrase(){
+        if(currentTempo < text.length){
+            word.textContent = words[currentTempo];
+            currentTempo++;
+           
+        }
+        if(reading){
+            setTimeout(displayNextPhrase, 400);
+        }
+    }
+
+  
+    
+    
+</script>
+
+<style>
+    #word{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-family: 'Courier New';
+    }
+</style>
