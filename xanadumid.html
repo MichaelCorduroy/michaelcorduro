@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conway's Game of Life</title>
+  <link rel="icon" type="image/x-icon" href="res/sully.png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+
+    canvas {
+      border: 1px solid #000;
+      background-color: #fff;
+      max-width: 600px; /* Maximum width for desktop screens */
+      width: 90vw; /* Responsive width for mobile screens */
+      height: auto; /* Keep aspect ratio */
+    }
+
+    button, input {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button.faded {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 600px) {
+      button, input {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <center>
+    <h1 style="font-family: Courier;">Conway's Game of Life</h1>
+    <p style = "font-family: Courier;"> just tap it.</p>
+    <canvas id="gameBoard"></canvas>
+    <br>
+    <label for="colorPicker">Color Picker:</label>
+    <input type="color" id="colorPicker" value="#FFFFFF">
+    <br>
+    <button id="startButton">Start</button>
+    <button id="stopButton" class="faded">Stop</button>
+    <button id="clearButton">Clear</button>
+    <br>
+    <select id = "preloader">
+        <option value ="zero">Preload a pattern:</option>
+        <option value ="option1">Option1</option>
+        <option value ="option2">Option2</option>
+        <option value ="option3">Option3</option>
+    </select>
+    <br>
+    <button onclick = "printGrid()">print grid</button>
+  </center>
+
+  <script>
+    const canvas = document.getElementById("gameBoard");
+    const ctx = canvas.getContext("2d");
+    const colorPicker = document.getElementById("colorPicker");
+    const startButton = document.getElementById("startButton");
+    const stopButton = document.getElementById("stopButton");
+    const clearButton = document.getElementById("clearButton");
+    const preloadSel =  document.getElementById("preloader");
+
+    // Define grid size (18x18)
+    const GRID_SIZE = 18;
+
+    // Define square size (adjust based on desired canvas size)
+    let SQUARE_SIZE;
+
+    // Initial grid state (null for white, object with alive and color properties for colored squares)
+    let grid = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(null));
+
+    function updateCanvasSize() {
+      const canvasSize = Math.min(window.innerWidth, window.innerHeight) * 0.9;
+      canvas.width = Math.min(canvasSize, 600); // Maximum width is 600px
+      canvas.height = canvas.width; // Keep square aspect ratio
+      SQUARE_SIZE = canvas.width / GRID_SIZE; // Update square size based on canvas size
+      drawGrid(); // Redraw the grid with the new size
+    }
+
+    // Function to draw a rectangle with border
+    function drawSquare(x, y, color) {
+      ctx.fillStyle = color || "black";
+      ctx.fillRect(x, y, SQUARE_SIZE, SQUARE_SIZE);
+      ctx.strokeStyle = "black";
+      ctx.strokeRect(x, y, SQUARE_SIZE, SQUARE_SIZE);
+    }
+
+    // Function to draw the entire grid
+    function drawGrid() {
+      for (let row = 0; row < GRID_SIZE; row++) {
+        for (let col = 0; col < GRID_SIZE; col++) {
+          const x = col * SQUARE_SIZE;
+          const y = row * SQUARE_SIZE;
+          const cell = grid[row][col];
+          drawSquare(x, y, cell ? cell.color : null); // Draw the square with its color
+        }
+      }
+    }
+
+    // Function to count live neighbors and their colors of a cell
+    function countLiveNeighborsAndColors(row, col) {
+      let count = 0;
+      const colorCounts = {};
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          if (i === 0 && j === 0) continue; // Skip the cell itself
+          const newRow = row + i;
+          const newCol = col + j;
+          if (newRow >= 0 && newRow < GRID_SIZE && newCol >= 0 && newCol < GRID_SIZE) {
+            const neighbor = grid[newRow][newCol];
+            if (neighbor) {
+              count++;
+              if (colorCounts[neighbor.color]) {
+                colorCounts[neighbor.color]++;
+              } else {
+                colorCounts[neighbor.color] = 1;
+              }
+            }
+          }
+        }
+      }
+      return { count, colorCounts };
+    }
+
+    // Function to determine the most frequent color among neighbors
+    function getDominantColor(colorCounts) {
+      let dominantColor = null;
+      let maxCount = 0;
+      for (const color in colorCounts) {
+        if (colorCounts[color] > maxCount) {
+          maxCount = colorCounts[color];
+          dominantColor = color;
+        }
+      }
+      return dominantColor;
+    }
+
+    // Function to update the grid based on Game of Life rules
+    function updateGrid() {
+      let newGrid = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(null));
+      for (let row = 0; row < GRID_SIZE; row++) {
+        for (let col = 0; col < GRID_SIZE; col++) {
+          const { count, colorCounts } = countLiveNeighborsAndColors(row, col);
+          const cell = grid[row][col];
+          if (cell) {
+            newGrid[row][col] = count === 2 || count === 3 ? cell : null;
+          } else {
+            if (count === 3) {
+              newGrid[row][col] = { alive: true, color: getDominantColor(colorCounts) };
+            }
+          }
+        }
+      }
+      grid = newGrid;
+      drawGrid();
+    }
+
+    // Add event listener for click on the canvas
+    canvas.addEventListener("click", function(event) {
+      const clickX = event.offsetX;
+      const clickY = event.offsetY;
+
+      // Calculate the clicked square coordinates based on grid size and square size
+      const clickedRow = Math.floor(clickY / SQUARE_SIZE);
+      const clickedCol = Math.floor(clickX / SQUARE_SIZE);
+
+      if (clickedRow >= 0 && clickedRow < GRID_SIZE && clickedCol >= 0 && clickedCol < GRID_SIZE) {
+        console.log("Clicked square:", clickedRow, clickedCol);
+
+        // Set the color of the clicked square
+        if (grid[clickedRow][clickedCol]) {
+          grid[clickedRow][clickedCol] = null;
+        } else {
+          grid[clickedRow][clickedCol] = { alive: true, color: colorPicker.value };
+        }
+
+        // Redraw the grid with the updated color/state
+        drawGrid();
+      } else {
+        console.log("Clicked outside the grid");
+      }
+    });
+
+    // add an event listener for the pattern preloader
+    preloadSel.addEventListener('change', function(event){
+        //get the selected pattern and change the grid
+        let value = event.target.value;
+        console.log(value);
+        //TODO implement more patterns, add some edge cases here
+        if(value == "option1"){
+            grid[0][0] = {alive:true, color:"#000000"};
+            grid[1][1] = {alive:true, color:"#000000"};
+            grid[1][2] = {alive:true, color:"#000000"};
+            grid[2][0] = {alive:true, color:"#000000"};
+            grid[2][1] = {alive:true, color:"#000000"};
+            drawGrid();
+        }
+    });
+
+    // Add event listeners for buttons
+    startButton.addEventListener("click", function() {
+      if (!intervalId) {
+        intervalId = setInterval(updateGrid, 200); // Update every 200ms (adjust as needed)
+        startButton.classList.add("faded");
+        startButton.disabled = true;
+        stopButton.classList.remove("faded");
+        stopButton.disabled = false;
+      }
+    });
+
+    stopButton.addEventListener("click", function() {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+        startButton.classList.remove("faded");
+        startButton.disabled = false;
+        stopButton.classList.add("faded");
+        stopButton.disabled = true;
+      }
+    });
+
+    clearButton.addEventListener("click", function() {
+      grid = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(null));
+      drawGrid();
+    });
+
+    // Function to print the grid state
+    function printGrid() {
+        let formattedGrid = grid.map(row => row.map(cell => {
+            if (cell) {
+                return `{alive: ${cell.alive}, color: "${cell.color}"}`;
+            } else {
+                return "null";
+            }
+        }).join(", ")).join("\n");
+
+        console.log("[\n" + formattedGrid + "\n]");
+    }
+
+    // Variable to store the interval ID for stopping the game loop
+    let intervalId = null;
+
+    // Initial drawing of the grid
+    updateCanvasSize();
+
+    // Add event listener for window resize to adjust canvas size
+    window.addEventListener("resize", updateCanvasSize);
+  </script>
+</body>
+</html>
+
