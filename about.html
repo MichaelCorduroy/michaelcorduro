@@ -1,15 +1,40 @@
+<DOCTYPE html>
 <link rel="icon" type="image/x-icon" href="/res/sully.png">
-<a href = "index.html"> < home </a>
-<p>hi, im michael. i ocasionaly update this website with recent software projects, visual art i've created, or any random thought or idea i felt needed to be preserved/shared</p>
+
+<a href = "index.html"> home </a>
+<p>hi, im michael. i randomly update this website with recent software projects, visual art i've created, or any random thought or idea that needed to be preserved/shared</p>
 
 <br>
 <p>things i'm currently interested in:</p>
 <ul>
 	<li>orchestrating the world's largest game of hot potato</li>
 	<li>incorporating uniquee and intelligent npcs in video games</li>
-	<li>an intuitive 3d way to make music that doesn'
-	t suck</li>
+	<li>an intuitive 3d way to make music that doesn't suck</li>
 </ul>
 
 <br>
-<p> currently reading: The Machine Stops - E.M. Forster</p>
+<p class = "static-text"> currently reading:</p>
+<p class = "blink-text">The Machine Stops - E.M. Forster</p>
+
+<style>
+
+ @keyframes blink {
+      0%, 100% {
+        opacity: 1; /* Fully visible */
+      }
+      50% {
+        opacity: 0; /* Invisible */
+      }
+    }
+
+    .blink-text {
+      animation: blink 1s infinite; /* 1 second duration */
+      display: inline-block;
+    }
+    .static-text {
+      display: inline-block;
+    }
+
+
+</style>
+
