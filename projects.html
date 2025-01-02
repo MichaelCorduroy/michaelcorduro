@@ -1,10 +1,18 @@
 <a href = "index.html"> < home </a>
 <link rel="icon" type="image/x-icon" href="res/sully.png">
 <p> you can find more of what im currently doing on my <a href = "https://github.com/michaelcorduroy">github<a></p> 
-<p>i'll probably update this with work summaries and some links </p>
+<p>i'll gradually update this with work summaries and some links </p>
 
 
-<h4>Conway's Colorful Game of Life</p>
+
+
+
+
+
+
+
+<marquee> //////////////////////////////////////////////////////////////////////////////////////////////////////////////////</marquee>
+<h4 class = "animated-text" style = "font-family: Courier;">Conway's Colorful Game of Life</p>
 
     <div class = "window" id="mydiv" title="Guided Meditation: The Game">
         <iframe  id = "conway" style = "width: 500px; height: 500px;" src="xanadu.html" title="Astral Meditation"></iframe> 
@@ -15,3 +23,29 @@
       <p> a simple but colorful rendition of Conway's Game of Life, a classic</p>
       <p> click it and begin. play it <a href= "xanadu.html">here</a> code for it <a href= "https://gist.github.com/MichaelCorduroy/95586458b52c3d65a74d5ed8f6e8d227">here</a></p>
     </div>
+<style>
+
+@keyframes boldPulse {
+      0% {
+        font-weight: 300; /* Light */
+      }
+      25% {
+        font-weight: 500; /* Medium Light */
+      }
+      50% {
+        font-weight: 700; /* Medium Bold */
+      }
+      75% {
+        font-weight: 900; /* Bold */
+      }
+      100% {
+        font-weight: 300; /* Back to Light */
+      }
+    }
+
+    .animated-text {
+      font-size: 2rem;
+      animation: boldPulse 20s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+      transition: font-weight 0.5s ease-in-out;
+    }
+</style>
