@@ -97,7 +97,12 @@
     <script>
 	    var slideIndex = 0;
 	    var images = ["scubamusic1.png", "scubamusic2.png", "scubamusic3.png", "scubamusic4.png"];	
-
+	document.addEventListener('DOMContentLoaded', function() {
+	    var videos = document.querySelectorAll('video');
+	    videos.forEach(function(video) {
+		video.play();
+	    });
+	});
 	    function showSlides() {
 		    var img = document.getElementById("scubamusicDisplay");
 		    img.src = "res/" + images[slideIndex];		   
