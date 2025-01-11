@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="res/sully.png">
+    <title>Projects</title>
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+        color: #000;
+        font-family: Courier, monospace; /* Ensures Courier is the default font */
+        text-align: left; /* Aligns all content to the left */
+    }
+
+    .content {
+        margin: 0 auto; /* Center content within the available space */
+        padding: 1rem;
+        text-align: left;
+        width: 55%;
+    }
+
+    a {
+        color: blue;
+        text-decoration: none;
+        font-family: inherit; /* Inherits the Courier font-family */
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    p {
+        margin: 0.5rem 0;
+        line-height: 1.5;
+        font-family: inherit; /* Keeps the consistent font-family */
+    }
+
+    h3 {
+        margin: 1rem 0;
+        line-height: 1.6;
+        font-family: inherit; /* Keeps the consistent font-family */
+    }
+
+    .animated-text {
+        font-family: Courier, monospace;
+        font-size: 2rem;
+        animation: boldPulse 20s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    }
+
+    iframe, video {
+        display: block;
+        margin: 1rem 0;
+        max-width: 100%;
+    }
+
+    marquee {
+        color: grey;
+    }
+
+    @keyframes boldPulse {
+        0% {
+            font-weight: 300; /* Light */
+        }
+        25% {
+            font-weight: 500; /* Medium Light */
+        }
+        50% {
+            font-weight: 700; /* Medium Bold */
+        }
+        75% {
+            font-weight: 900; /* Bold */
+        }
+        100% {
+            font-weight: 300; /* Back to Light */
+        }
+    }
+</style>
+
+</head>
+<body>
+    <div class="content">
+        <a href="index.html">&lt; home</a>
+        <p>You can view my open source work on my <a href="https://github.com/michaelcorduroy">GitHub</a>.</p>
+        <p>I occasionally update this with work I'm now willing to share and some links to other cool stuff. :p</p>
+
+        <div>
+            <h3 class="animated-text">Breadwinner</h3>
+            <video src="res/titlevideo1.mov" autoplay muted loop></video>
+            <p>First full production length video game; more information soon.</p>
+        </div>
+
+        <div>
+            <h3 class="animated-text">Scuba Music</h3>
+            <div id="slideshow">
+                <img id="scubamusicDisplay" src="res/scubamusic1.png" alt="Scuba Music">
+            </div>
+            <p><a href="https://github.com/MichaelCorduroy/ScubaMusic.git">GitHub</a></p>
+            <p>A barebones desktop MP3 player I wrote in Java... I want to rewrite this in Rust for better performance and integration with other projects.</p>
+        </div>
+
+        <marquee>Fun Projects Below!!! :( ͡~ ͜ʖ ͡°) ✧♡(◕‿◕✿)¯\_( ͡° ͜ʖ ͡°)_/¯ ... </marquee>
+
+        <div>
+            <h3 class="animated-text">Conway's Colorful Game of Life</h3>
+            <iframe src="xanadu.html" title="Conway's Game of Life"></iframe>
+            <p>A simple but colorful rendition of Conway's Game of Life, a classic. Play it <a href="xanadu.html">here</a>. Code for it <a href="https://gist.github.com/MichaelCorduroy/95586458b52c3d65a74d5ed8f6e8d227">here</a>.</p>
+        </div>
+
+        <div>
+            <h3 class="animated-text">Robot Sculpture no. 1</h3>
+            <video id="machineDisplay" src="res/deathbot.mov" autoplay muted loop></video>
+            <p>um this <a href="deathbot.html">thing</a>.</p>
+        </div>
+
+        <div>
+            <h3 class="animated-text">Astral Meditation: The Game</h3>
+            <iframe src="astral-meditation.html" title="Astral Meditation"></iframe>
+            <p>An interesting idea to make a video game where the point was just to meditate. No points, no goal—just meditate. Might add music one day.</p>
+        </div>
+
+        <div>
+            <h3 class="animated-text">Ice Spice Racing (Videogame)</h3>
+            <video src="res/icespicekart.mov" autoplay muted loop></video>
+            <p>A silly video game I made in 2022 for fun. It's Mario Kart meets Ice Spice. Made in Godot, 3D models in Blender, and the title screen remix in Ableton.</p>
+        </div>
+    </div>
+    <script>
+        var images = ["scubamusic1.png", "scubamusic2.png", "scubamusic3.png", "scubamusic4.png"];
+        var slideIndex = 0;
+
+        function nextSlide() {
+            document.getElementById("scubamusicDisplay").src = "res/" + images[slideIndex];
+            slideIndex = (slideIndex + 1) % images.length;
+        }
+
+        setInterval(nextSlide, 5000);
+    </script>
+</body>
+</html>
+
