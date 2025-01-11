@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/res/sully.png">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        h1 {
+            font-size: 5vw; /* Responsive font size */
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        #colorPalette {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .colorSquare {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            border: 1px solid #000;
+            margin: 5px;
+        }
+
+        #colorPicker {
+            margin: 10px;
+            width: 50px;
+            height: 50px;
+        }
+
+        canvas {
+            border: 1px solid #000;
+            width: 90%; /* Make it responsive */
+            height: auto; /* Maintain aspect ratio */
+            max-width: 800px;
+        }
+
+        #content {
+            text-align: center;
+            margin: 10px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 7vw;
+            }
+
+            .colorSquare {
+                width: 30px;
+                height: 30px;
+            }
+
+            #colorPicker {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>michaelcorduroy.com</h1>
+    <div id="content">
+        <a href="index.html"> < Home </a>
+        <p>New art display still in progress.</p>
+        <p>You can draw here if you're on desktop or mobile.</p>
+    </div>
+    <div id="colorPalette"></div>
+    <input type="color" id="colorPicker">
+    <canvas id="canvas" width="1300" height="800"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const colorPalette = document.getElementById('colorPalette');
+        const colorPicker = document.getElementById('colorPicker');
+        let drawing = false;
+
+        // Colors for the palette
+        const colors = ['#000000', '#808080', '#C0C0C0', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FFA500', '#FFC0CB', '#800080', '#008080', '#008000', '#FFD700', '#A52A2A', '#4B0082'];
+
+        // Create color palette
+        colors.forEach(color => {
+            const colorSquare = document.createElement('div');
+            colorSquare.className = 'colorSquare';
+            colorSquare.style.backgroundColor = color;
+            colorSquare.addEventListener('click', () => setColor(color));
+            colorPalette.appendChild(colorSquare);
+        });
+
+        // Set color function
+        function setColor(color) {
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            colorPicker.value = color;
+        }
+
+        // Event listeners for the color picker
+        colorPicker.addEventListener('input', (e) => {
+            setColor(e.target.value);
+        });
+
+        // Touch and mouse events for drawing
+        function getCanvasCoords(e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: (e.touches ? e.touches[0].clientX : e.clientX) - rect.left,
+                y: (e.touches ? e.touches[0].clientY : e.clientY) - rect.top
+            };
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            drawing = true;
+            const { x, y } = getCanvasCoords(e);
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (drawing) {
+                const { x, y } = getCanvasCoords(e);
+                ctx.lineTo(x, y);
+                ctx.lineWidth = 5;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            drawing = false;
+        });
+
+        canvas.addEventListener('touchstart', (e) => {
+            drawing = true;
+            const { x, y } = getCanvasCoords(e);
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            if (drawing) {
+                const { x, y } = getCanvasCoords(e);
+                ctx.lineTo(x, y);
+                ctx.lineWidth = 5;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+            }
+            e.preventDefault(); // Prevent scrolling
+        });
+
+        canvas.addEventListener('touchend', () => {
+            drawing = false;
+        });
+    </script>
+</body>
+</html>
+
