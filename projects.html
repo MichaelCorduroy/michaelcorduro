@@ -14,20 +14,19 @@
         }
 
         .content {
-            margin: 0 auto;
+            margin: 0;
             padding: 1rem;
-            width: 55%;
             text-align: left;
+	    width: 55%;
         }
+	#machineDisplay{
+		background-color: aqua;
+		object-fit: cover;
+		max-height: 500px;
+		width: 400px;
+    }
 
-        /* Images & Videos */
-        iframe, video, img {
-            display: block;
-            margin: 1rem 0;
-            max-width: 100%;
-        }
 
-        /* Hyperlinks */
         a {
             color: blue;
             text-decoration: none;
@@ -37,7 +36,6 @@
             text-decoration: underline;
         }
 
-        /* Paragraphs & Headings */
         p {
             margin: 0.5rem 0;
             line-height: 1.5;
@@ -46,134 +44,92 @@
         h3 {
             margin: 1rem 0;
             line-height: 1.6;
+        }
+
+        .animated-text {
             font-family: Courier, monospace;
             font-size: 2rem;
             animation: boldPulse 20s cubic-bezier(0.42, 0, 0.58, 1) infinite;
         }
 
-        /* Custom Animations */
-        @keyframes boldPulse {
-            0% { font-weight: 300; } /* Light */
-            25% { font-weight: 500; } /* Medium Light */
-            50% { font-weight: 700; } /* Medium Bold */
-            75% { font-weight: 900; } /* Bold */
-            100% { font-weight: 300; } /* Back to Light */
+        iframe, video {
+            display: block;
+            margin: 1rem 0;
+            max-width: 100%;
         }
 
-        /* Slideshow Images */
-        #scubamusicDisplay {
-            max-width: 500px;
-            max-height: 500px;
-        }
-
-        #machineDisplay {
-            background-color: aqua;
-            object-fit: cover;
-            max-height: 500px;
-            width: 600px;
-        }
-
-        /* Fun marquee section */
         marquee {
             color: grey;
         }
 
-        /* Responsive Design for Mobile */
-        @media (max-width: 768px) {
-            .content {
-                width: 90%; /* Full width with some padding */
-                text-align: center; /* Center content on mobile */
+        @keyframes boldPulse {
+            0% {
+                font-weight: 300; /* Light */
             }
-
-            h3 {
-                font-size: 1.5rem; /* Slightly smaller headings on mobile */
+            25% {
+                font-weight: 500; /* Medium Light */
             }
-
-            iframe, video, img {
-                margin: 0 auto; /* Center multimedia content */
+            50% {
+                font-weight: 700; /* Medium Bold */
+            }
+            75% {
+                font-weight: 900; /* Bold */
+            }
+            100% {
+                font-weight: 300; /* Back to Light */
             }
         }
     </style>
-    <script>
-	    var slideIndex = 0;
-	    var images = ["scubamusic1.png", "scubamusic2.png", "scubamusic3.png", "scubamusic4.png"];	
-	document.addEventListener('DOMContentLoaded', function() {
-	    var videos = document.querySelectorAll('video');
-	    videos.forEach(function(video) {
-		video.play();
-	    });
-	});
-	    function showSlides() {
-		    var img = document.getElementById("scubamusicDisplay");
-		    img.src = "res/" + images[slideIndex];		   
-		    slideIndex = (slideIndex + 1) % images.length;
-	    }
-	    setInterval(showSlides, 5000); // Change image every 2 seconds
-    
-	
-    </script>
-
 </head>
 <body>
-    <div class="content">
-        <a href="index.html">&lt; home</a>
-        <p>You can view my open-source work on my <a href="https://github.com/michaelcorduroy">GitHub</a>.</p>
-        <p>I occasionally update this with work I'm now willing to share and some links to other cool stuff :p</p>
 
-        <div>
-            <h3 class="animated-text">Breadwinner</h3>
-            <video style="width: 400px; height: 260px;" src="res/titlevideo1.mov" autoplay muted playsinline loop></video>
-            <p>First full production-length video game; more information soon.</p>
-        </div>
+<div class="content">
+    <a href="index.html">&lt; home</a>
+    <p>You view can my open source work on my <a href="https://github.com/michaelcorduroy">GitHub</a>.</p>
+    <p>I occasionally update this with work im now willing to share and some links to other cool stuff:p</p>
 
-        <div>
-            <h3 class="animated-text">Scuba Music</h3>
-            <div id="slideshow">
-                <img id="scubamusicDisplay" src="res/scubamusic1.png">
-            </div>
-            <a href="https://github.com/MichaelCorduroy/ScubaMusic.git">GitHub</a>
-            <p>
-                A barebones desktop MP3 player I wrote in Java. Wanted to experiment with playlist suggestion and genre
-                recognition. Ultimately, I want to rewrite this in Rust to 1) dramatically improve performance and 2)
-                combine a music player with a separate project also written in Rust.
-            </p>
-        </div>
-
-        <br>
-        <marquee>
-            Fun Projects Below!!! : ( ͡~ ͜ʖ ͡°) ✧♡(◕‿◕✿)¯\_( ͡° ͜ʖ ͡°)_/¯ξξ(∵◕◡◕∵)ξξᶘ ◕ᴥ◕ᶅ(⌯˃̶᷄ ﹏ ˂̶᷄⌯)(ง ͠° ͟ل͜ ͡°)ง(ಠ_ಠ)┌∩┐╾━╤デ╦︻(▀̿Ĺ̯▀̿ ̿)
-            (• ε •)(΄◞ิ౪◟ิ‵)｡◕‿‿◕｡ 🗲(ღ˘⌣˘)♥ ℒ♡ⓥℯ ㄚ♡ⓤ ('_')┏oo┓('_')( ͡°❥ ͡°)
-        </marquee>
-
-        <div>
-            <h3 class="animated-text">Conway's Colorful Game of Life</h3>
-            <iframe style="width: 500px; height: 500px;" src="xanadu.html" title="Conway's Game of Life"></iframe>
-            <p>A simple but colorful rendition of Conway's Game of Life, a classic.</p>
-            <p>Click it and begin. Play it <a href="xanadu.html">here</a>. Code for it <a href="https://gist.github.com/MichaelCorduroy/95586458b52c3d65a74d5ed8f6e8d227">here</a>.</p>
-        </div>
-
-        <div>
-            <h3 class="animated-text">Robot Sculpture no. 1</h3>
-            <video id="machineDisplay" src="res/deathbot.mov" autoplay muted playsinline loop></video>
-            <p>Um, this <a href="deathbot.html">thing</a></p>
-        </div>
-
-        <div>
-            <h3 class="animated-text">Astral Meditation: The Game</h3>
-            <iframe style="width: 520px; height: 325px;" src="astral-meditation.html" title="Astral Meditation"></iframe>
-            <p>
-                An interesting idea to make a video game where the point was just to meditate. No points, no goal—just meditate. It's kinda boring. I should probably add music one day. You can play it here (hit "play now").
-            </p>
-        </div>
-
-        <div>
-            <h3 class="animated-text">Ice Spice Racing (Video Game)</h3>
-            <video style="width: 400px; height: 260px;" src="res/icespicekart.mov" autoplay muted playsinline loop></video>
-            <p>
-                A silly video game I made in 2022 for fun. The premise was something like Mario Kart but themed after American rapper Ice Spice. The game was made in the Godot engine, and 3D models in Blender. <b>Fun fact:</b> I produced the title screen remix in Ableton.
-            </p>
-        </div>
+    <div>
+        <h3 class="animated-text">Breadwinner</h3>
     </div>
+
+    <div>
+        <h3 class="animated-text">Scuba Music</h3>
+        <a href="https://github.com/MichaelCorduroy/ScubaMusic.git">GitHub</a>
+        <p>A barebones desktop MP3 player I wrote in Java... Wanted to experiment with playlist suggestion and genre recognition but ultimately, I want to rewrite this in Rust before going further. This is to 1) dramatically improve performance and 2) eventually combine a music player with a separate project also written in Rust.</p>
+    </div>
+    <br>
+    <marquee>Fun Projects Below!!!:( ͡~ ͜ʖ ͡°) ✧♡(◕‿◕✿)¯\_( ͡° ͜ʖ ͡°)_/¯ξξ(∵◕◡◕∵)ξξᶘ ◕ᴥ◕ᶅ(⌯˃̶᷄ ﹏ ˂̶᷄⌯)(ง ͠° ͟ل͜ ͡°)ง(ಠ_ಠ)┌∩┐╾━╤デ╦︻(▀̿Ĺ̯▀̿ ̿)
+    (• ε •)(΄◞ิ౪◟ิ‵)｡◕‿‿◕｡ 🗲(ღ˘⌣˘)♥ ℒ♡ⓥℯ ㄚ♡ⓤ ('_')┏oo┓('_')( ͡°❥ ͡°)</marquee>
+
+    <div>
+        <h3 class="animated-text">Conway's Colorful Game of Life</h3>
+        <iframe style="width: 500px; height: 500px;" src="xanadu.html" title="Conway's Game of Life"></iframe>
+        <p>A simple but colorful rendition of Conway's Game of Life, a classic.</p>
+        <p>Click it and begin. Play it <a href="xanadu.html">here</a>. Code for it <a href="https://gist.github.com/MichaelCorduroy/95586458b52c3d65a74d5ed8f6e8d227">here</a>.</p>
+    </div>
+
+    <div>
+	    <h3 class="animated-text">Robot Sculpture no. 1</h3>
+	    <video  id = "machineDisplay" src="res/deathbot.mov"  controls="false" autoplay muted playsinline loop></video>
+
+
+	</div>
+
+    <div>
+        <h3 class="animated-text">Astral Meditation: The Game</h3>
+        <iframe style="width: 520px; height: 325px;" src="astral-meditation.html" title="Astral Meditation"></iframe>
+        <p>An interesting idea to make a video game where the point was just to meditate. No points, no goal—just meditate. It's kinda boring. I should probably add music one day. You can play it here (hit "play now")</p>
+    </div>
+
+    <div>
+        <h3 class="animated-text">Ice Spice Racing (Videogame)</h3>
+        <video style="width: 400px; height: 260px;" src="res/icespicekart.mov" autoplay muted playsinline loop></video>
+	<p>A silly video game I made in 2022 for fun. The premise was supposed to be something like Mario Kart but themed after American rapper Ice Spice. The majority of the game was made in the Godot game engine, and the 3D models I made in Blender. It was simple but worked, and I had genuine fun making it. <b>Fun fact:</b> I produced the title screen remix in Ableton.</p>
+    </div>
+</div>
+
 </body>
+
 </html>
+
 
