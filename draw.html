@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Art – michaelcorduroy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/x-icon" href="/res/sully.png" />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: radial-gradient(circle at top, #1a1a1a, #000);
+      color: #eee;
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    h1, h2 {
+      font-family: 'VT323', monospace;
+    }
+
+    a {
+      text-decoration: underline;
+      color: #22d3ee;
+    }
+
+    a:hover {
+      color: #0ea5e9;
+    }
+
+    .colorSquare {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #555;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+
+    canvas {
+      border: 1px solid #444;
+      box-shadow: 0 0 10px #000;
+    }
+
+    #colorPicker {
+      width: 36px;
+      height: 36px;
+      margin-top: 1rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    body.light-mode {
+      background: #f4f4f4;
+      color: #111;
+    }
+
+    body.light-mode a {
+      color: #0369a1;
+    }
+
+    body.light-mode canvas {
+      border-color: #aaa;
+    }
+
+    body.light-mode .colorSquare {
+      border-color: #999;
+    }
+  </style>
+</head>
+<body class="p-6">
+  <button id="modeToggle" class="fixed top-4 right-4 bg-gray-700 text-white px-3 py-1 rounded z-50">Toggle Light</button>
+
+  <header class="text-center mb-10">
+    <h1 class="text-6xl mb-2" id="page-title">michaelcorduroy.com</h1>
+    <p class="text-sm text-gray-400">drawing toy (desktop only)</p>
+    <p class="text-sm text-gray-400">i will never fix this</p>
+    <nav class="mt-4">
+      <a href="index.html">&lt; home</a>
+    </nav>
+  </header>
+
+  <main class="flex flex-col md:flex-row items-start justify-center gap-8 max-w-screen-lg mx-auto">
+    <div class="flex flex-col items-center">
+      <div id="colorPalette" class="flex flex-col items-center"></div>
+      <input type="color" id="colorPicker" class="mt-4" />
+    </div>
+    <canvas id="canvas" width="1000" height="700"></canvas>
+  </main>
+
+  <script>
+    const toggle = document.getElementById('modeToggle');
+          document.body.classList.toggle('light-mode');
+      toggle.textContent = document.body.classList.contains('light-mode')
+        ? 'Toggle Dark'
+        : 'Toggle Light';
+
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      toggle.textContent = document.body.classList.contains('light-mode')
+        ? 'Toggle Dark'
+        : 'Toggle Light';
+    });
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const colorPalette = document.getElementById('colorPalette');
+    const colorPicker = document.getElementById('colorPicker');
+
+    const colors = ['#000000', '#808080', '#C0C0C0', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FFA500', '#FFC0CB', '#800080', '#008080', '#008000', '#FFD700', '#A52A2A', '#4B0082'];
+
+    let drawing = false;
+
+    colors.forEach(color => {
+      const square = document.createElement('div');
+      square.className = 'colorSquare';
+      square.style.backgroundColor = color;
+      square.onclick = () => setColor(color);
+      colorPalette.appendChild(square);
+    });
+
+    function setColor(color) {
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      colorPicker.value = color;
+    }
+
+    colorPicker.addEventListener('input', (e) => {
+      setColor(e.target.value);
+    });
+
+    canvas.addEventListener('mousedown', (e) => {
+      drawing = true;
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (drawing) {
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.lineWidth = 4;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+      }
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      drawing = false;
+    });
+  </script>
+</body>
+</html>
+

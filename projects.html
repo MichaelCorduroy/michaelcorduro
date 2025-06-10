@@ -1,176 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="res/sully.png">
-    <title>Projects</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .content {
-            margin: 0;
-            margin: 0 auto;
-            padding: 1rem;
-            width: 85%;
-            text-align: left;
-        }
-	#machineDisplay{
-		background-color: aqua;
-		object-fit: cover;
-		max-height: 500px;
-		width: 600px;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects – michaelcorduroy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: radial-gradient(circle at top, #1a1a1a, #000);
+      color: #eee;
+      transition: background-color 0.4s, color 0.4s;
     }
 
-        /* Images & Videos */
-        iframe, video, img {
-            display: block;
-            margin: 1rem 0;
-            max-width: 100%;
-        }
+    h1, h2, h3 {
+      font-family: 'VT323', monospace;
+      transition: color 0.4s;
+    }
 
-        /* Hyperlinks */
-        a {
-            color: blue;
-            text-decoration: none;
-            text-decoration: underline;
-        }
+    h1#page-title {
+      color: #7dd3fc;
+    }
 
-        /* Paragraphs & Headings */
-        p {
-            margin: 0.5rem 0;
-            line-height: 1.5;
-        h3 {
-            margin: 1rem 0;
-            line-height: 1.6;
-        }
-        .animated-text {
-            font-family: Courier, monospace;
-            font-size: 2rem;
-            animation: boldPulse 20s cubic-bezier(0.42, 0, 0.58, 1) infinite;
-        }
+    nav a {
+      text-decoration: underline;
+      color: #22d3ee;
+      transition: color 0.3s;
+    }
 
-	#slideshow{
-		max-width: 500px;
-		max-height: 500px;
-	}
-	#scubamusicDisplay{
-		max-width: 300px;
-		max-height: auto;
-	}
-        /* Custom Animations */
-        @keyframes boldPulse {
-            0% { font-weight: 300; } /* Light */
-            25% { font-weight: 500; } /* Medium Light */
-            50% { font-weight: 700; } /* Medium Bold */
-            75% { font-weight: 900; } /* Bold */
-            100% { font-weight: 300; } /* Back to Light */
-        }
+    nav a:hover {
+      color: #0ea5e9;
+    }
 
-        /* Slideshow Images */
-        #scubamusicDisplay {
-            max-width: 500px;
-            max-height: 500px;
-        }
+    .projects-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
 
-        iframe, video {
-            display: block;
-            margin: 1rem 0;
-            max-width: 100%;
-        #machineDisplay {
-            background-color: aqua;
-            object-fit: cover;
-            max-height: 500px;
-            width: 600px;
-        }
+    .project-card {
+      background: #222;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.6);
+      transition: background-color 0.3s;
+      font-size: 0.9rem;
+      color: #ccc;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      border: 1px solid #444;
+      cursor: pointer;
+    }
 
-        /* Fun marquee section */
-        marquee {
-            color: grey;
-        }
+    .project-card:hover {
+      background: #2a2a2a;
+      border-color: #7dd3fc;
+      box-shadow: 0 4px 14px rgb(125 211 252 / 0.6);
+      color: #fff;
+    }
 
-        @keyframes boldPulse {
-            0% {
-                font-weight: 300; /* Light */
-            }
-            25% {
-                font-weight: 500; /* Medium Light */
-            }
-            50% {
-                font-weight: 700; /* Medium Bold */
-        /* Responsive Design for Mobile */
-        @media (max-width: 768px) {
-            .content {
-                width: 90%; /* Full width with some padding */
-                text-align: center; /* Center content on mobile */
-            }
-            75% {
-                font-weight: 900; /* Bold */
-            h3 {
-                font-size: 1.5rem; /* Slightly smaller headings on mobile */
-            }
-            100% {
-                font-weight: 300; /* Back to Light */
-            iframe, video, img {
-                margin: 0 auto; /* Center multimedia content */
-            }
-        }
-    </style>
+    .project-title {
+      font-family: 'VT323', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      color: #7dd3fc;
+    }
+
+    .project-desc {
+      font-style: italic;
+      color: #bbb;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 4rem;
+    }
+
+    button#modeToggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: #444;
+      color: #ddd;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: monospace;
+      font-weight: 600;
+      transition: background-color 0.3s, color 0.3s;
+      z-index: 1000;
+    }
+
+    body.light-mode {
+      background: #f5f3eb;
+      color: #333;
+    }
+
+    body.light-mode h1#page-title {
+      color: #0891b2;
+    }
+
+    body.light-mode nav a {
+      color: #0e7490;
+    }
+
+    body.light-mode nav a:hover {
+      color: #0369a1;
+    }
+
+    body.light-mode .project-card {
+      background: #e7e5e4;
+      color: #444;
+      border: 1px solid #cfcfcf;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    }
+
+    body.light-mode .project-card:hover {
+      background: #d6d3d1;
+      border-color: #22d3ee;
+      box-shadow: 0 4px 12px rgb(34 211 238 / 0.3);
+      color: #222;
+    }
+
+    body.light-mode .project-title {
+      color: #0891b2;
+    }
+
+    body.light-mode .project-desc {
+      color: #555;
+    }
+
+    body.light-mode footer {
+      color: #999;
+    }
+  </style>
 </head>
-<body>
-<script>
-	var images = ["scubamusic1.png", "scubamusic2.png", "scubamusic3.png", "scubamusic4.png"];
-	var slideIndex = 0;
-	function nextSlide() {
-		document.getElementById("scubamusicDisplay").src = "res/" + images[slideIndex];
-		slideIndex = (slideIndex + 1) % images.length;
-	}
-	setInterval(nextSlide, 5000);
-</script>
-<div class="content">
-    <a href="index.html">&lt; home</a>
-    <p>You view can my open source work on my <a href="https://github.com/michaelcorduroy">GitHub</a>.</p>
-    <p>I occasionally update this with work im now willing to share and some links to other cool stuff:p</p>
-    <div>
-        <h3 class="animated-text">Breadwinner</h3>
-        <video style="width: 400px; height: auto;" src="res/titlevideo1.mov" autoplay playsinline muted loop></video>
-	<p> First full production length video game; more information soon.
+
+<body class="p-4 md:p-8">
+  <button id="modeToggle">Switch to Light Mode</button>
+
+  <header class="text-center mb-10">
+    <h1 id="page-title" class="text-5xl md:text-6xl">Projects</h1>
+    <p class="text-sm text-gray-400">by michaelcorduroy</p>
+  </header>
+
+  <nav class="flex flex-wrap justify-center gap-4 text-sm md:text-base underline mb-12">
+    <a href="index.html">Home</a>
+    <a href="projects.html" class="font-bold">Projects</a>
+    <a href="#blog">Blog</a>
+    <a href="#now-playing">Art</a>
+    <a href="#guestbook">Guestbook</a>
+  </nav>
+
+  <main class="projects-container">
+    <div class="project-card">
+      <div class="project-title">🍞 Breadwinner</div>
+      <div class="project-desc">A surreal dream job simulator exploring work, dreams, and entropy.</div>
     </div>
-    <div>
-        <h3 class="animated-text">Scuba Music</h3>
-	<!-- add a simple html slideshow here -->
-	<div id = "slideshow">
-		<img id = "scubamusicDisplay" src = "res/scubamusic1.png">	
-	</div>
-        <a href="https://github.com/MichaelCorduroy/ScubaMusic.git">GitHub</a>
-        <p>A barebones desktop MP3 player I wrote in Java... Wanted to experiment with playlist suggestion and genre recognition but ultimately, I want to rewrite this in Rust before going further. This is to 1) dramatically improve performance and 2) eventually combine a music player with a separate project also written in Rust.</p>
-        <br>
-    <marquee>Fun Projects Below!!!:( ͡~ ͜ʖ ͡°) ✧♡(◕‿◕✿)¯\_( ͡° ͜ʖ ͡°)_/¯ξξ(∵◕◡◕∵)ξξᶘ ◕ᴥ◕ᶅ(⌯˃̶᷄ ﹏ ˂̶᷄⌯)(ง ͠° ͟ل͜ ͡°)ง(ಠ_ಠ)┌∩┐╾━╤デ╦︻(▀̿Ĺ̯▀̿ ̿)
-    (• ε •)(΄◞ิ౪◟ิ‵)｡◕‿‿◕｡ 🗲(ღ˘⌣˘)♥ ℒ♡ⓥℯ ㄚ♡ⓤ ('_')┏oo┓('_')( ͡°❥ ͡°)</marquee>
-    <div>
-        <h3 class="animated-text">Conway's Colorful Game of Life</h3>
-        <iframe style="width: 500px; height: 500px;" src="xanadu.html" title="Conway's Game of Life"></iframe>
-        <p>A simple but colorful rendition of Conway's Game of Life, a classic.</p>
-        <p>Click it and begin. Play it <a href="xanadu.html">here</a>. Code for it <a href="https://gist.github.com/MichaelCorduroy/95586458b52c3d65a74d5ed8f6e8d227">here</a>.</p>
+
+    <div class="project-card">
+      <div class="project-title">🧞‍♂️ Conjure</div>
+      <div class="project-desc">A Spotlight-like launcher for macOS that learns your habits and obeys voice commands.</div>
     </div>
-    <div>
-	    <h3 class="animated-text">Robot Sculpture no. 1</h3>
-	    <video  id = "machineDisplay" src="res/deathbot.mov"  controls="false" autoplay muted playsinline loop></video>
-	    <p> um this <a href = "deathbot.html">thing</a></p>
-	</div>
-    <div>
-        <h3 class="animated-text">Astral Meditation: The Game</h3>
-        <iframe style="width: 520px; height: 325px;" src="astral-meditation.html" title="Astral Meditation"></iframe>
-        <p>An interesting idea to make a video game where the point was just to meditate. No points, no goal—just meditate. It's kinda boring. I should probably add music one day. You can play it here (hit "play now")</p>
+
+    <div class="project-card" onclick="window.location.href = 'severe.html';">
+      <div class="project-title">🔊 Severe</div>
+      <div class="project-desc">A 3D digital audio workstation reinventing how music is visualized and composed.</div>
     </div>
-    <div>
-        <h3 class="animated-text">Ice Spice Racing (Videogame)</h3>
-        <video style="width: 400px; height: 260px;" src="res/icespicekart.mov" autoplay playsinline muted loop></video>
-	<p>A silly video game I made in 2022 for fun. The premise was supposed to be something like Mario Kart but themed after American rapper Ice Spice. The majority of the game was made in the Godot game engine, and the 3D models I made in Blender. It was simple but worked, and I had genuine fun making it. <b>Fun fact:</b> I produced the title screen remix in Ableton.</p>
+
+    <div class="project-card" onclick="window.location.href = 'mltesting.html';">
+      <div class="project-title">🧠 ML Experiments</div>
+      <div class="project-desc">A semi-interactive time capsule of digital works I’ve abandoned, reworked, or lost.</div>
     </div>
-</div>
+
+    <div class="project-card">
+      <div class="project-title">💻  Freelance Web Dev.</div>
+      <div class="project-desc">A collection of commissioned freelance projects I’ve worked on.</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">🎮 Other Videogames</div>
+      <div class="project-desc">A semi-interactive time capsule of digital works I’ve abandoned, reworked, or lost.</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">📼 Archive</div>
+      <div class="project-desc">A semi-interactive time capsule of digital works I’ve abandoned, reworked, or lost.</div>
+    </div>
+  </main>
+
+  <footer class="mt-12">
+    &copy; 2025 michaelcorduroy. All weirdness reserved.
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('modeToggle');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      toggle.textContent = document.body.classList.contains('light-mode') 
+        ? 'Switch to Dark Mode' 
+        : 'Switch to Light Mode';
+    });
+  </script>
 </body>
 </html>
+

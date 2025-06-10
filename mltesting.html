@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ML Experiments — michaelcorduroy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'VT323', monospace;
+      background-color: #fff;
+      color: #000;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section {
+      padding: 4rem 1rem;
+    }
+
+    .pulsing-title {
+      animation: thicken 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes thicken {
+      0% {
+        text-shadow: 0 0 0px black;
+      }
+      100% {
+        text-shadow: 0 0 2px black, 0 0 4px black;
+      }
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<a href = "index.html" style="position: absolute; top: 1rem; left: 5rem;">home</a>
+<body class="text-center">
+
+  <header class="mb-12 mt-16">
+    <h1 class="text-5xl md:text-7xl pulsing-title">ML Experiments</h1>
+    <p class="text-sm mt-2 text-gray-400">Machine learning tests, tools, and oddities — made for fun and exploration.</p>
+  </header>
+
+  <section class="section">
+    <p class="max-w-3xl mx-auto text-gray-500 fade-in">
+    These are small machine learning projects/experiments, with the goal of understanding and learning from ML implementation methods to later be used on a separate project. Most of them explore <u>evolutionary machine learning</u>, where i try to mimick biological processes using ideas learned from machine learning and use them in realtime applications. Many were made quickly, either as coursework or as personal experimentation.
+    </p>
+  </section>
+
+  <section class="section">
+    <h1 class="mb-3 pulsing-title">Basic Reinforcement Learning</h1>
+    <video controls src = "srcs/rl8.mp4" class="mx-auto mb-6 rounded-lg max-w-xl" style="max-width: 60%;" autoplay muted playsinline></video>
+    <p class="max-w-2xl mx-auto text-gray-500 fade-in padding p-4">I created a reinforcement learning demo in Pygame where a square learns to escape a boxed environment through a single goal opening. It uses four directional “eyes” to sense distances to walls, forming a state vector stored in long-term memory. Initially, the square explores the space randomly, guided by an epsilon value that balances exploration and exploitation. Colliding with any wall resets it to the starting point. Over time, it refines its policy through Q-learning, eventually learning an efficient path to the goal. If I revisit this project, I'll add obstacles or a maze. Below are examples with varying epsilon values.</p>
+  <div class="flex flex-wrap justify-center gap-6">
+  <div class="text-center">
+    <video src="srcs/rldemo2.mp4" class="mx-auto mb-2 rounded-lg" style="max-width: 200px;" loop autoplay muted playsinline></video>
+    <p class="text-gray-600 text-sm">ε = 15</p>
+  </div>
+  <div class="text-center">
+    <video src="srcs/rl100.mp4" class="mx-auto mb-2 rounded-lg" style="max-width: 200px;" loop autoplay muted playsinline></video>
+    <p class="text-gray-600 text-sm">ε = 100</p>
+  </div>
+  <div class="text-center">
+    <video src="srcs/rldemo1.mp4" class="mx-auto mb-2 rounded-lg" style="max-width: 200px;" loop autoplay muted playsinline></video>
+    <p class="text-gray-600 text-sm">ε = 6</p>
+  </div>
+</div>
+  
+
+  </section>
+  <section class="section">
+  <h2 class="mb-4 pulsing-title">The Titanic Experiments</h2>
+  
+  <p class="max-w-2xl mx-auto text-gray-500 fade-in">
+    These experiments explore evolutionary algorithms as an alternative to gradient-based training of neural networks, using the Titanic Kaggle Dataset. The challenge is a classic binary classification problem: predicting whether a passenger survived the Titanic disaster based on several features.
+  </p>
+  
+  <p class="max-w-2xl mx-auto text-gray-500 fade-in mt-4">
+    The dataset includes structured data points such as age, sex, ticket fare, passenger class, number of siblings/spouses aboard, number of parents/children aboard, and port of embarkation. Labels indicate survival (1) or death (0). The full dataset and competition details are available <a href="https://www.kaggle.com/competitions/titanic" target="_blank" class="underline">here on Kaggle</a>.
+  </p>
+
+  <h3 class="text-2xl mb-2 pulsing-title">Would you survive the Titanic?</h3>
+
+  <p class="max-w-2xl mx-auto text-gray-500 fade-in">
+  I decided to go ahead and export the model I trained locally so you can input your own Titanic passenger data into the model and see if it thinks that passenger would've survived the Titanic disaster!
+  </p>
+
+  <form class="max-w-2xl mx-auto text-gray-500 fade-in mt-4" id="input-form">
+    <label class = "mb-4 " for="age">Age:</label>
+    <input class="mb-4 p-2 outline w-20" type="number" id="age" name="age" required>
+    
+    <label for="sex">Sex:</label>
+    <select class="mb-4 p-2 outline font-bold" id="sex" name="sex" required>
+      <option value="male">male</option>
+      <option value="female">female</option>
+    </select>
+
+    <label for="pclass">Passenger Class:</label>
+    <select class="mb-4 p-2 outline" id="pclass" name="pclass" required>
+      <option value="1">1st Class</option>
+      <option value="2">2nd Class</option>
+      <option value="3">3rd Class</option>
+    </select>
+    
+    <label for="fare">Fare:</label>
+    <input class="mb-4 p-2 outline w-20" type="number" id="fare" name="fare" required>
+    <br>
+
+    <label for="sibsp">Siblings/Spouses Aboard:</label>
+    <input class="mb-4 p-2 outline w-20" type="number" id="sibsp" name="sibsp" required>
+    
+    <label for="parch">Parents/Children Aboard:</label>
+    <input class="mb-4 p-2 outline w-20" type="number" id="parch" name="parch" required>
+    
+    <label for="embarked">Embarked:</label>
+    <select class="mb-4 p-2 outline" id="embarked" name="embarked" required>
+      <option value="S">Southampton</option>
+      <option value="C">Cherbourg</option>
+      <option value="Q">Queenstown</option>
+    </select>
+ 
+    <button type="submit" class="bg-black-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+    
+  </form>
+  
+  <p class="max-w-2xl mx-auto text-gray-500 fade-in mt-4">
+  I chose to evaluate my neural networks using Q-values instead of accuracy because I wasn’t trying to predict a correct label — I was trying to train agents to learn optimal behaviors over time, and Q-values reflect how valuable each decision is in the long run, not just whether it was “right” in the moment. Even if the shapes of the Q-value and accuracy curves mirror each other, the Q-value gives a smoother, more sensitive view of learning progress, especially when improvements are subtle or when the agent is still exploring. For me, it felt more informative than a flat accuracy metric that doesn't tell the whole story.
+</p>
+
+  <div class="mt-8">
+    <h3 class="text-2xl mb-2 pulsing-title">Particle Swarm Optimization (PSO)</h3>
+    <p class="max-w-2xl mx-auto text-gray-500 fade-in">
+    <div>
+	    <img src="srcs/pso.png" alt="PSO gif" class="mx-auto mb-4 rounded-lg max-w-xl" style="max-width: 40%;">
+
+    </div>
+    <p class="max-w-2xl mx-auto text-gray-500 fade-in">
+      In this approach, each neural network is treated as a particle flying through a high-dimensional space of weights. These particles adjust their position based on both their own best-known performance and that of their neighbors. Over iterations, the population “swarms” toward better solutions. PSO proved especially useful for quickly finding reasonable accuracy without fine-tuning learning rates or gradients.
+    </p>
+
+<p class="max-w-2xl mx-auto text-gray-500 fade-in">
+PSO was the least consistent of the three, but it was the most exploratory, with strong exploration and a tendency to avoid premature convergence. Here's a link to the <u><a href = "https://github.com/michaelcorduroy">code</a></u>.
+
+  </div>
+
+  <div class="mt-8">
+    <h3 class="text-2xl mb-2 pulsing-title">Differential Evolution (DE)</h3>
+    <p class="max-w-2xl mx-auto text-gray-500 fade-in">
+      DE evolves solutions by selecting three random candidates, combining them to form a mutation vector, and then deciding whether to replace the current candidate based on performance. In the Titanic experiments, DE produced slow but stable improvement over generations, with strong exploration and a tendency to avoid premature convergence.
+    </p>
+  </div>
+
+  <div class="mt-8">
+    <h3 class="text-2xl mb-2 pulsing-title">Evolutionary Strategies (ES)</h3>
+    <img src="srcs/evo.png"  class="mx-auto mb-4 rounded-lg max-w-xl" style="max-width: 40%;">
+    <p class="max-w-2xl mx-auto text-gray-500 fade-in">
+      Evolutionary Strategies operate by perturbing neural network weights with random noise and measuring how performance changes. The best-performing variants are selected and used to guide the next generation. ES was the most consistent of the three, striking a balance between exploration and exploitation, and yielding solid validation scores across multiple runs.
+    </p>
+  </div>
+</section>
+
+  <section class="section">
+    <h2 class="mb-4 pulsing-title">How were they made?</h2>
+    <p class="max-w-2xl mx-auto text-gray-500 fade-in">
+      The projects use Python (PyTorch, HuggingFace, OpenCV, etc), local models, and some custom training. Some are just scripts, others are interactive UIs or browser demos.
+    </p>
+  </section>
+
+  <section class="section mb-32">
+    <h2 class="mb-4 pulsing-title">Where can I see more?</h2>
+    <p class="max-w-2xl mx-auto text-gray-500 fade-in">
+    Source code and occasional demos will be posted on <a href="https://github.com/michaelcorduroy" class="underline">GitHub</a> and shared with friends. Some experiments may evolve into full tools or get absorbed into other projects like <a href="conjure.html" class = "underline">Conjure</a> or <a href="severe.html" class="underline">Severe</a>.
+    </p>
+  </section>
+
+  <script>
+    const observers = document.querySelectorAll('.fade-in');
+    const options = { threshold: 0.1 };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, options);
+
+    observers.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
+

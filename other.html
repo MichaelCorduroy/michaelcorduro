@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>michaelcorduroy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+  <style>
+    /* Dark Mode (default) */
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: radial-gradient(circle at top, #1a1a1a, #000);
+      color: #eee;
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    h1, h2, h3 {
+      font-family: 'VT323', monospace;
+      transition: color 0.4s;
+    }
+
+    /* Swapped title colors */
+    h1#main-title {
+      color: #a3f7bf; /* About Me's old lime but muted for dark */
+    }
+
+    h2#about-title {
+      color: #f472b6; /* michaelcorduroy’s old pink */
+    }
+
+    /* Blink animation */
+    .blinker {
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* Navigation links */
+    nav a {
+      text-decoration: underline;
+      color: #22d3ee; /* cyan-400 */
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #0ea5e9; /* cyan-600 */
+    }
+
+    /* Projects cards */
+    .projects-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .project-card {
+      background: #222; /* dark card background */
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.6);
+      transition: background-color 0.3s;
+      font-size: 0.9rem;
+      color: #ccc;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      border: 1px solid #444;
+    }
+    .project-card:hover {
+      background: #2a2a2a;
+      border-color: #7dd3fc; /* cyan-300 */
+      box-shadow: 0 4px 14px rgb(125 211 252 / 0.6);
+      color: #fff;
+    }
+    .project-title {
+      font-family: 'VT323', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      color: #7dd3fc; /* cyan */
+    }
+    .project-title .emoji {
+      font-size: 1.3rem;
+    }
+    .project-desc {
+      font-style: italic;
+      color: #bbb;
+    }
+
+    /* Blog section */
+    #blog p {
+      font-style: italic;
+      color: #888;
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 4rem;
+    }
+
+    /* Dark mode toggle button */
+    button#modeToggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: #444;
+      color: #ddd;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: monospace;
+      font-weight: 600;
+      transition: background-color 0.3s, color 0.3s;
+      z-index: 1000;
+    }
+    body.light-mode button#modeToggle {
+      background-color: #ddd;
+      color: #333;
+    }
+
+    /* Light mode styles */
+    body.light-mode {
+      background: #f5f3eb;
+      color: #333;
+    }
+    body.light-mode h1#main-title {
+      color: #d946ef; /* pink-600 */
+    }
+    body.light-mode h2#about-title {
+      color: #84cc16; /* lime-500 */
+    }
+    body.light-mode nav a {
+      color: #0e7490; /* cyan-700 */
+    }
+    body.light-mode nav a:hover {
+      color: #0369a1; /* cyan-800 */
+    }
+    body.light-mode .project-card {
+      background: #e7e5e4;
+      color: #444;
+      border: 1px solid #cfcfcf;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    }
+    body.light-mode .project-card:hover {
+      background: #d6d3d1;
+      border-color: #22d3ee;
+      box-shadow: 0 4px 12px rgb(34 211 238 / 0.3);
+      color: #222;
+    }
+    body.light-mode .project-title {
+      color: #0891b2;
+    }
+    body.light-mode .project-desc {
+      color: #555;
+    }
+    body.light-mode footer {
+      color: #999;
+    }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+
+  <button id="modeToggle">Switch to Light Mode</button>
+
+  <!-- Header -->
+  <header class="text-center mb-10">
+    <h1 id="main-title" class="text-5xl md:text-7xl">michaelcorduroy</h1>
+    <p class="text-sm mt-2 text-gray-400">"online" <span class="blinker">◉</span></p>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="flex flex-wrap justify-center gap-4 text-sm md:text-base underline mb-8">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#blog">Blog</a>
+    <a href="#now-playing">Now Playing</a>
+    <a href="#guestbook">Guestbook</a>
+  </nav>
+
+  <!-- About Me -->
+  <section id="about" class="mb-12 max-w-3xl mx-auto">
+    <h2 id="about-title" class="text-3xl mb-2">About Me</h2>
+    <p>
+      I make strange software, surreal games, and experimental tools. Founder of <span class="text-pink-400 dark:text-pink-500">Breadwinner</span>, creator of
+      <span class="text-cyan-400 dark:text-cyan-500">Conjure</span> and <span class="text-indigo-400 dark:text-indigo-500">Severe</span>. I want to change how people experience computers.
+    </p>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="mb-12 max-w-5xl mx-auto">
+    <h2 class="text-3xl text-yellow-300 mb-6 text-center">Projects</h2>
+    <div class="projects-container">
+      <div class="project-card">
+        <div class="project-title">
+          <span class="emoji">🎮</span> Breadwinner <span class="emoji">🌙</span>
+        </div>
+        <p class="project-desc">A surreal dreamscape game exploring the grind of work and escape through dreams.</p>
+        <img src="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" alt="Breadwinner demo gif" style="border-radius:8px; max-width:100%; margin-top:0.8rem;" />
+        <p><a href="#" class="underline text-cyan-400 hover:text-cyan-600">Learn More &rarr;</a></p>
+      </div>
+      <div class="project-card">
+        <div class="project-title">
+          <span class="emoji">🪄</span> Conjure <span class="emoji">💻</span>
+        </div>
+        <p class="project-desc">Spotlight killer for macOS with fuzzy search, voice commands, and multitasking.</p>
+        <img src="https://media.giphy.com/media/3o7TKxXbi5CWPhBVP6/giphy.gif" alt="Conjure demo gif" style="border-radius:8px; max-width:100%; margin-top:0.8rem;" />
+        <p><a href="#" class="underline text-cyan-400 hover:text-cyan-600">See Details &rarr;</a></p>
+      </div>
+      <div class="project-card">
+        <div class="project-title">
+          <span class="emoji">🎵</span> Severe <span class="emoji">🎚️</span>
+        </div>
+        <p class="project-desc">A 3D DAW redefining how music is created with immersive spatial audio tools.</p>
+        <video controls style="border-radius:8px; max-width:100%; margin-top:0.8rem;">
+          <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm" />
+          Your browser does not support the video tag.
+        </video>
+        <p><a href="#" class="underline text-cyan-400 hover:text-cyan-600">Discover More &rarr;</a></p>
+      </div>
+<div class="project-card">
+        <div class="project-title">
+          <span class="emoji">🎵</span> Severe <span class="emoji">🎚️</span>
+        </div>
+        <p class="project-desc">A 3D DAW redefining how music is created with immersive spatial audio tools.</p>
+        <video controls style="border-radius:8px; max-width:100%; margin-top:0.8rem;">
+          <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm" />
+          Your browser does not support the video tag.
+        </video>
+        <p><a href="#" class="underline text-cyan-400 hover:text-cyan-600">Discover More &rarr;</a></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section id="blog" class="mb-12 max-w-3xl mx-auto">
+    <h2 class="text-3xl text-rose-300 mb-2">Blog</h2>
+    <p class="italic text-sm text-gray-400">[Coming soon – daily ramblings, dev logs, and stream-of-consciousness posts]</p>
+  </section>
+
+  <!-- Now Playing -->
+  <section id="now-playing" class="mb-12 max-w-3xl mx-auto">
+    <h2 class="text-3xl text-blue-300 mb-2">Now Playing</h2>
+    <p>🎵 Radiohead – <em>Everything In Its Right Place</em></p>
+  </section>
+
+  <!-- Guestbook -->
+  <section id="guestbook" class="mb-12 max-w-3xl mx-auto">
+    <h2 class="text-3xl text-green-300 mb-2">Guestbook</h2>
+    <p class="italic text-sm text-gray-400">[Eventually you'll be able to leave a message here. Until then, pretend you just said "sick site bro"]</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 michaelcorduroy — Built with HTML + Tailwind + a dream</p>
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('modeToggle');
+    const body = document.body;
+
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('light-mode');
+      if (body.classList.contains('light-mode')) {
+        toggleBtn.textContent = 'Switch to Dark Mode';
+      } else {
+        toggleBtn.textContent = 'Switch to Light Mode';
+      }
+    });
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel = "stylesheet" href = "mobart.css">
+	<title>Art</title>
+
+</head>
+
+<header>
+	<h1>Selected Works</h1>
+	
+<section>
+	<label for="year" style="font-family: Courier;">Year:</label>
+	<select id="year" style="font-family: Courier;" onchange= "displayArt()">
+		<option value="2024">2024</option>
+		<option value="2023">2023</option>
+		<option value="2022">2022</option>
+		<option value="2021">2021</option>
+		<option value="2020">2020</option>
+	</select>
+</section>
+</header>
+
+
+
+<section id="artGallery">
+	<p style="text-align: center; font-family: Courier;">Select a year.</p>
+</section>
+
+<div id="artModal">
+    <button class="closeButton" onclick="closeModal()">✖</button>
+    <img id="modalImage" src="" alt="Enlarged Art">
+</div>
+
+
+	<script src = "mobart.js"></script>
+</body>
+</html>
+

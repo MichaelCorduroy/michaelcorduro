@@ -1,170 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/res/sully.png">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Art – michaelcorduroy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: radial-gradient(circle at top, #1a1a1a, #000);
+      color: #eee;
+    }
 
-        h1 {
-            font-size: 5vw; /* Responsive font size */
-            text-align: center;
-            margin: 20px 0;
-        }
+    h1, h2, h3 {
+      font-family: 'VT323', monospace;
+    }
 
-        #colorPalette {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 10px 0;
-        }
-
-        .colorSquare {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            border: 1px solid #000;
-            margin: 5px;
-        }
-
-        #colorPicker {
-            margin: 10px;
-            width: 50px;
-            height: 50px;
-        }
-
-        canvas {
-            border: 1px solid #000;
-            width: 90%; /* Make it responsive */
-            height: auto; /* Maintain aspect ratio */
-            max-width: 800px;
-        }
-
-        #content {
-            text-align: center;
-            margin: 10px;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 7vw;
-            }
-
-            .colorSquare {
-                width: 30px;
-                height: 30px;
-            }
-
-            #colorPicker {
-                width: 40px;
-                height: 40px;
-            }
-        }
-    </style>
+    h1#page-title {
+      color: #7dd3fc;
+    }
+  </style>
 </head>
-<body>
-    <h1>michaelcorduroy.com</h1>
-    <div id="content">
-        <a href="index.html"> < Home </a>
-        <p>New art display still in progress.</p>
-        <p>You can draw here if you're on desktop or mobile.</p>
-    </div>
-    <div id="colorPalette"></div>
-    <input type="color" id="colorPicker">
-    <canvas id="canvas" width="1300" height="800"></canvas>
+<body class="p-4 md:p-8">
+  <header class="text-center mb-10">
+    <h1 id="page-title" class="text-5xl md:text-6xl">Art</h1>
+    <p class="text-sm text-gray-400">by michaelcorduroy</p>
+  </header>
 
-    <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        const colorPalette = document.getElementById('colorPalette');
-        const colorPicker = document.getElementById('colorPicker');
-        let drawing = false;
+  <nav class="flex flex-wrap justify-center gap-4 text-sm md:text-base underline mb-12">
+    <a href="index.html">Home</a>
+    <a href="projects.html">Projects</a>
+    <a href="#blog">Blog</a>
+    <a href="#art" class="font-bold">Art</a>
+    <a href="#guestbook">Guestbook</a>
+  </nav>
 
-        // Colors for the palette
-        const colors = ['#000000', '#808080', '#C0C0C0', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FFA500', '#FFC0CB', '#800080', '#008080', '#008000', '#FFD700', '#A52A2A', '#4B0082'];
+  <!-- Slideshow -->
+  <div class="flex justify-center mb-8">
+    <img id="slideshow" src="/res/art1.jpg" alt="Slideshow Art" class="w-full max-w-2xl rounded border border-gray-700 shadow-lg">
+  </div>
 
-        // Create color palette
-        colors.forEach(color => {
-            const colorSquare = document.createElement('div');
-            colorSquare.className = 'colorSquare';
-            colorSquare.style.backgroundColor = color;
-            colorSquare.addEventListener('click', () => setColor(color));
-            colorPalette.appendChild(colorSquare);
-        });
+  <!-- Year Selector -->
+  <div class="text-center mb-6">
+    <label for="year" class="mr-2">Year:</label>
+    <select id="year" onchange="displayArt()" class="bg-black border border-gray-600 text-white p-2 rounded">
+      <option value="2024">2024</option>
+      <option value="2023">2023</option>
+      <option value="2022">2022</option>
+      <option value="2021">2021</option>
+      <option value="2020">2020</option>
+    </select>
+  </div>
 
-        // Set color function
-        function setColor(color) {
-            ctx.strokeStyle = color;
-            ctx.fillStyle = color;
-            colorPicker.value = color;
-        }
+  <!-- Art Grid -->
+  <section id="artGallery" class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+    <p class="col-span-full text-center text-gray-400">Select a year.</p>
+  </section>
 
-        // Event listeners for the color picker
-        colorPicker.addEventListener('input', (e) => {
-            setColor(e.target.value);
-        });
+  <!-- Modal -->
+  <div id="artModal" class="fixed inset-0 bg-black bg-opacity-90 hidden justify-center items-center z-50">
+    <button class="absolute top-6 right-6 text-white text-3xl" onclick="closeModal()">&times;</button>
+    <img id="modalImage" src="" alt="Enlarged Art" class="max-w-full max-h-full border border-white">
+  </div>
 
-        // Touch and mouse events for drawing
-        function getCanvasCoords(e) {
-            const rect = canvas.getBoundingClientRect();
-            return {
-                x: (e.touches ? e.touches[0].clientX : e.clientX) - rect.left,
-                y: (e.touches ? e.touches[0].clientY : e.clientY) - rect.top
-            };
-        }
+  <footer class="mt-12 text-center text-sm text-gray-600">
+    &copy; 2025 michaelcorduroy. All weirdness reserved.
+  </footer>
 
-        canvas.addEventListener('mousedown', (e) => {
-            drawing = true;
-            const { x, y } = getCanvasCoords(e);
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-        });
+  <script>
+    const slideshow = document.getElementById("slideshow");
+    const images = ["/res/art1.jpg", "/res/art2.jpg", "/res/art3.jpg"];
+    let slideIndex = 0;
 
-        canvas.addEventListener('mousemove', (e) => {
-            if (drawing) {
-                const { x, y } = getCanvasCoords(e);
-                ctx.lineTo(x, y);
-                ctx.lineWidth = 5;
-                ctx.lineCap = 'round';
-                ctx.stroke();
-            }
-        });
+    setInterval(() => {
+      slideIndex = (slideIndex + 1) % images.length;
+      slideshow.src = images[slideIndex];
+    }, 3000);
 
-        canvas.addEventListener('mouseup', () => {
-            drawing = false;
-        });
+    const artData = {
+      2024: ["/res/rt/daddy.jpg", "/res/2024/art2.jpg"],
+      2023: ["/res/2023/art1.jpg"],
+      2022: [],
+      2021: [],
+      2020: [],
+    };
 
-        canvas.addEventListener('touchstart', (e) => {
-            drawing = true;
-            const { x, y } = getCanvasCoords(e);
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-        });
+    function displayArt() {
+      const year = document.getElementById("year").value;
+      const gallery = document.getElementById("artGallery");
+      gallery.innerHTML = "";
 
-        canvas.addEventListener('touchmove', (e) => {
-            if (drawing) {
-                const { x, y } = getCanvasCoords(e);
-                ctx.lineTo(x, y);
-                ctx.lineWidth = 5;
-                ctx.lineCap = 'round';
-                ctx.stroke();
-            }
-            e.preventDefault(); // Prevent scrolling
-        });
+      const works = artData[year];
+      if (!works || works.length === 0) {
+        gallery.innerHTML = `<p class='col-span-full text-center text-gray-500'>No art available for this year.</p>`;
+        return;
+      }
 
-        canvas.addEventListener('touchend', () => {
-            drawing = false;
-        });
-    </script>
+      works.forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.className = "w-full rounded cursor-pointer border border-gray-700 hover:border-cyan-400";
+        img.onclick = () => openModal(src);
+        gallery.appendChild(img);
+      });
+    }
+
+    function openModal(src) {
+      document.getElementById("modalImage").src = src;
+      document.getElementById("artModal").classList.remove("hidden");
+      document.getElementById("artModal").classList.add("flex");
+    }
+
+    function closeModal() {
+      document.getElementById("artModal").classList.remove("flex");
+      document.getElementById("artModal").classList.add("hidden");
+    }
+  </script>
 </body>
 </html>
 

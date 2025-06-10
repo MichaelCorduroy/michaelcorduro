@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Severe — michaelcorduroy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      padding-bottom: 4rem;
+    }
+
+    h1 {
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    a.discover-more {
+      display: block;
+      margin: 2rem auto 0;
+      text-align: center;
+      text-decoration: underline;
+      transition: color 0.3s;
+      font-size: 1rem;
+    }
+
+    a.discover-more:hover {
+      color: #0ea5e9;
+    }
+
+    section {
+      margin-top: 4rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="text-center mt-12 mb-16">
+    <h1 class="text-5xl md:text-7xl">Severe</h1>
+    <p class="text-sm mt-2 text-gray-400">A 3D DAW redefining music creation with space-aware interfaces and experimental workflow.</p>
+  </header>
+
+  <div class="max-w-6xl mx-auto px-4">
+    <video controls class="mx-auto rounded-xl shadow-lg mb-12" style="max-width: 100%;" autoplay muted loop playsinline>
+      <source src="srcs/severedemo2.mp4" type="video/webm" />
+      Your browser does not support the video tag.
+    </video>
+
+    <section class="fade-in" id="what-is">
+      <h2 class="text-2xl mb-2 ">What is Severe?</h2>
+      <p class="text-gray-400 leading-relaxed max-w-3xl">
+        Severe is an experimental 3D Digital Audio Workstation aiming to shift how musicians interface with sound.
+        Instead of traditional flat and linear timelines, Severe places audio in space—allowing you to shape, move, and feel your music with a sense of depth and immersion. A modal sound editor, Severe's <strong>ARRANGER, SEQUENCER, MIXER, SAMPLER,</strong>and <strong>RUNNER</strong> modes provide 5 unique paradigms for creating music intuitatively. We listen to music in 3D, so naturally we should make it in 3D too. While still in very early development, it explores new possibilities for visualizing and sculpting audio in a physical way. Expect bugs, strangeness, and new ideas in constant motion. With new software version rollouts announced to friends and beta-testers, we hope to improve this new tool until it's ready to be enjoyed by the world. 
+      </p>
+    </section>
+
+    <section class="fade-in" id="tech">
+      <h2 class="text-2xl mt-12 mb-2 ">What’s the tech?</h2>
+      <p class="text-gray-400 leading-relaxed max-w-3xl">
+        Severe is built using <strong>raylib</strong> for rendering and UI, and a custom 3D audio library named <strong>Shoko</strong>,
+        which abstracts the miniaudio library among others into a 3D-aware sound engine. The codebase is in primarily C++ and designed with modularity in mind, allowing for low-latency manipulation of audio nodes in space.
+      </p>
+    </section>
+
+    <section class="fade-in" id="download">
+      <h2 class="text-2xl mt-12 mb-2">Where Can I Get It?</h2>
+      <p class="text-gray-400 leading-relaxed max-w-3xl">
+      You can try early builds, view progress, or contribute by contacting via <u><a href="mailto:michaelcordy43@protonmail.com">email</a></u> or by simply shooting a dm to <u><a href="https://www.instagram.com/michaelcorduroy">@michaelcorduroy</a></u> on Instagram. Feel free to reach out with comments or ideas, new friends are welcome! Keep in mind it's still evolving, and any feedback or interest is encouraged:
+      </p>
+      <a href="https://reddit.com/r/severeDAW/" class="discover-more">Discover More &rarr;</a>
+    </section>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
+

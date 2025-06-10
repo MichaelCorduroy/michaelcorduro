@@ -1,147 +1,243 @@
-<a href = "index.html"> < home </a>
-<p> i'm still collecting images of some recent work so for now make your own.</p>
-<br>
-<p> it probably only works on desktop sorry. i will never fix this.</p>
-<br>
-<br>
+<!DOCTYPE html>
+<html lang="en">
 
-    <link rel="icon" type="image/x-icon" href="/res/sully.png">
-
-
-    <!-- Display art in a grid -->
- <div id="content">
-
- </div>
-    <style>
-        body {
-            display: flex;
-            flex-direction: row;
-            align-items: stretch;
-        }
-        #dropdown-text{
-            position: absolute;
-            margin: 30px 100px;
-        }
-        #colorPalette {
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 60px 0px;
-        }
-        #colorPicker{
-            position: absolute;
-            margin: 20px 0px;
-            width: 35px;
-            height: 35px;
-        }
-        #toggleDrawingMode{
-            position: absolute;
-            margin: 700px 400x;
-        }
-        .colorSquare {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            border: 1px solid #000;
-            margin-bottom: 5px;
-        }
-        canvas {
-            position: absolute;
-            margin: 0px 74px;
-            border: 1px solid #000;
-        }
-
-        #content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px;
-        }
-
-    </style>
-</head>
-<body>
-    <h1 id="dropdown-text" style="font-family: Arial; font-size: 70px;">michaelcorduroy.com</h1>
-    <div id="colorPalette"></div>
-    
-   <script>
-        const colors = ['#000000', '#808080', '#C0C0C0', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FFA500', '#FFC0CB', '#800080', '#008080', '#008000', '#FFD700', '#A52A2A', '#4B0082'];
-
-
-
-colors.forEach(color => {
-    const colorSquare = document.createElement('div');
-    colorSquare.className = 'colorSquare';
-    colorSquare.style.backgroundColor = color;
-    colorSquare.addEventListener('click', () => setColor(color));
-    colorPalette.appendChild(colorSquare);
-});
-
-colorPicker.addEventListener('input', (e) => setColor(e.target.value));
-
-function setColor(color) {
-    ctx.strokeStyle = color;
-    ctx.fillStyle = color;
-    colorPicker.value = color;
-}
-    </script>
-    <br>
-    <br>
-    <canvas id="canvas" width="1300" height="800"></canvas>
-    <input type="color" id="colorPicker">
-  
-    <script>
-        const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const colorPalette = document.getElementById('colorPalette');
-const colorPicker = document.getElementById('colorPicker');
-let drawing = false;
-
-
-
-
-
-
-games = document.getElementById("games");
-
-
-
-
-
-
-canvas.addEventListener('mousedown', (e) => {
-    drawing = true;
-    ctx.beginPath();
-    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-});
-
-colorPicker.addEventListener('input', (e) => {
-    ctx.strokeStyle = e.target.value;
-    ctx.fillStyle = e.target.value;
-});
-
-canvas.addEventListener('mousemove', (e) => {
-    if (drawing) {
-        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-        ctx.lineWidth = 5;
-        ctx.lineCap = 'round';
-        ctx.stroke();
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Art – michaelcorduroy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: radial-gradient(circle at top, #1a1a1a, #000);
+      color: #eee;
     }
-});
 
-canvas.addEventListener('mouseup', () => {
-    drawing = false;
-});
+    h1, h2, h3 {
+      font-family: 'VT323', monospace;
+    }
 
-    </script>
+    h1#page-title {
+      color: #7dd3fc;
+    }
+
+    nav a {
+      text-decoration: underline;
+      color: #22d3ee;
+    }
+
+    nav a:hover {
+      color: #0ea5e9;
+    }
+
+    .art-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .art-thumb {
+      cursor: pointer;
+      border: 2px solid #444;
+      border-radius: 0.5rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .art-thumb:hover {
+      transform: scale(1.03);
+      border-color: #7dd3fc;
+    }
+
+    #artModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #artModal img {
+      max-height: 90vh;
+      max-width: 90vw;
+      border-radius: 0.5rem;
+    }
+
+    .closeButton {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #333;
+      color: #fff;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      border-radius: 0.25rem;
+    }
+  </style>
+</head>
+
+<body class="p-4 md:p-8">
+  <header class="text-center mb-10">
+    <h1 id="page-title" class="text-5xl md:text-6xl">Art</h1>
+    <p class="text-sm text-gray-400">its just some random images</p>
+    <u><a href="draw.html" class="text-sm text-gray-400">draw ur own!</a></u>
+  </header>
+
+  <nav class="flex flex-wrap justify-center gap-4 text-sm md:text-base underline mb-12">
+    <a href="index.html">Home</a>
+    <a href="projects.html">Projects</a>
+    <a href="#">Blog</a>
+    <a href="#" class="font-bold">Art</a>
+    <a href="#">Guestbook</a>
+  </nav>
+
+  <section class="flex flex-col items-center mb-10">
+    <label for="year" class="mb-2">Year:</label>
+    <select id="year" class="bg-gray-800 text-white px-4 py-2 rounded border border-gray-600" onchange="displayArt()">
+      <option value="all">All</option>
+      <option value="2025">2025</option>
+      <option value="2024">2024</option>
+      <option value="2023">2023</option>
+      <option value="2022">2022</option>
+    </select>
+  </section>
+
+  <section id="slideshow" class="flex justify-center mb-3">
+    <img id="slideshowImage" class="max-w-2xl rounded-lg border border-gray-700" src="" alt="Featured Art">
+  </section>
+
+  <section id="artGallery" class="art-grid"></section>
+
+  <div id="artModal" class="flex">
+    <button class="closeButton" onclick="closeModal()">✖</button>
+    <img id="modalImage" src="" alt="Enlarged Art">
+  </div>
+
+  <script>
+
+    const artData = {
+  "2022": [
+    "srcs/art/2022/daddy.jpg"
+  ],
+  "2025": [
+    "srcs/art/2025/opie.png",
+    "srcs/art/2025/resmile.png",
+    "srcs/art/2025/overroom.png",
+    "srcs/art/2025/pinktundra.png",
+    "srcs/art/2025/glaive.png",
+    "srcs/art/2025/kaiba.png",
+    "srcs/art/2025/inaguralfart.png"
+  ],
+  "2024": [
+    "srcs/art/2024/withfamily.png",
+    "srcs/art/2024/vectorcalc.png",
+    "srcs/art/2024/fatefulday.png",
+    "srcs/art/2024/dataclimbing.png",
+    "srcs/art/2024/breadwinnnnner.png",
+    "srcs/art/2024/sect060633827PM.png",
+    "srcs/art/2024/kid.png"
+  ],
+  "2023": [
+    "srcs/art/2023/babysquadron.png",
+    "srcs/art/2023/cinematic87.png",
+    "srcs/art/2023/strawberrygum_static.png",
+    "srcs/art/2023/dolornmygt.png",
+    "srcs/art/2023/hashchampion.png",
+    "srcs/art/2023/tvfriends.png",
+    "srcs/art/2023/gatosuenos.png",
+    "srcs/art/2023/sacrament.png",
+    "srcs/art/2023/atomblank.png",
+    "srcs/art/2023/oldtricks.png",
+    "srcs/art/2023/observer.png",
+    "srcs/art/2023/whathappensinvegas.png",
+    "srcs/art/2023/fauuuuuuuust2309.png",
+    "srcs/art/2023/overlord.png",
+    "srcs/art/2023/horticule.png",
+    "srcs/art/2023/5mood_enhancers.png",
+    "srcs/art/2023/arch6pel1go.png"
+  ]
+};
 
 
-   
+
+
+    const slideshowImage = document.getElementById('slideshowImage');
+    const yearSelector = document.getElementById('year');
+    const artGallery = document.getElementById('artGallery');
+    let slideshowImages = [];
+    let slideshowIndex = 0;
+
+    function getAllImages() {
+      return Object.keys(artData)
+        .sort((a, b) => b - a) // newest year first
+        .map(year => artData[year])
+        .flat();
+    }
+
+    function displayArt() {
+      const year = yearSelector.value;
+      let images = [];
+
+      if (year === "all") {
+        images = getAllImages();
+      } else {
+        images = artData[year] || [];
+      }
+
+      artGallery.innerHTML = '';
+      images.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'art-thumb';
+        img.onclick = () => openModal(src);
+        artGallery.appendChild(img);
+      });
+    }
+
+    function updateSlideshow() {
+      if (slideshowImages.length === 0) {
+        slideshowImage.style.display = 'none';
+        return;
+      }
+      slideshowImage.style.display = 'block';
+      slideshowImage.src = slideshowImages[slideshowIndex % slideshowImages.length];
+    }
+
+    function startSlideshow() {
+      setInterval(() => {
+        if (slideshowImages.length > 0) {
+          slideshowIndex = (slideshowIndex + 1) % slideshowImages.length;
+          updateSlideshow();
+        }
+      }, 10000);
+    }
+
+    function openModal(src) {
+      const modal = document.getElementById('artModal');
+      const modalImage = document.getElementById('modalImage');
+      modalImage.src = src;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('artModal').style.display = 'none';
+    }
+
+    // Init
+    slideshowImages = getAllImages().sort(() => Math.random() - 0.5);
+    displayArt();
+    updateSlideshow();
+    startSlideshow();
+  </script>
 </body>
+
 </html>
-
-
-
-
 

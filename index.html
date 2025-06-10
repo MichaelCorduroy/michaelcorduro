@@ -1,167 +1,463 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>michaelcorduroy</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/x-icon" href="res/sully.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
   <style>
+    /* Dark Mode (default) */
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-image: url("res/sully.png");
+      font-family: 'Courier New', Courier, monospace;
+      background: radial-gradient(circle at top, #1a1a1a, #000);
+      color: #eee;
+      transition: background-color 0.4s, color 0.4s;
     }
 
-    header {
-      text-align: center;
-      padding: 1rem;
+    h1, h2, h3 {
+      font-family: 'VT323', monospace;
+      transition: color 0.4s;
     }
 
-    nav {
-      text-align: center;
+    /* Swapped title colors */
+    h1#main-title {
+      color: #a3f7bf; /* About Me's old lime but muted for dark */
     }
 
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: inline-flex;
+    h2#about-title {
+      color: #f472b6; /* michaelcorduroy's old pink */
     }
 
-    nav li {
-      margin: 0 1rem;
+    /* Blink animation */
+    .blinker {
+      animation: blink 1s step-start infinite;
+    }
+    
+    @keyframes blink {
+      50% { opacity: 0; }
     }
 
+    /* Navigation links */
     nav a {
-      text-decoration: none;
+      text-decoration: underline;
+      color: #22d3ee; /* cyan-400 */
+      transition: color 0.3s;
+    }
+    
+    nav a:hover {
+      color: #0ea5e9; /* cyan-600 */
     }
 
-    /* Narrow container with background image */
-    .content-container {
-      position: relative;
-      max-width: 1000px;
+    /* Gifs - centered */
+    #greeting-gif {
+      padding: 1rem;
+      display: block;
       margin: 0 auto;
-      padding: 0 20px;
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    /* Projects cards */
+    .projects-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .project-card {
+      background: #222; /* dark card background */
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.6);
+      transition: background-color 0.3s;
+      font-size: 0.9rem;
+      color: #ccc;
+      font-family: 'Courier New', monospace;
       display: flex;
       flex-direction: column;
-      background-size: cover;
-      background-color: white;
-      background-position: left center;  /* or right center */
-      z-index: 2;
+      gap: 0.6rem;
+      border: 1px solid #444;
+      cursor: pointer; /* show it's clickable */
     }
-
-    .rainbow-bg {
-      animation: rainbow 5s linear infinite;
+    
+    .project-card:hover {
+      background: #2a2a2a;
+      border-color: #7dd3fc; /* cyan-300 */
+      box-shadow: 0 4px 14px rgb(125 211 252 / 0.6);
+      color: #fff;
     }
-
-    @keyframes rainbow {
-      0% { background-color: #ff0000; }
-      14% { background-color: #ff7f00; }
-      28% { background-color: #ffff00; }
-      42% { background-color: #00ff00; }
-      57% { background-color: #0000ff; }
-      71% { background-color: #4b0082; }
-      85% { background-color: #9400d3; }
-      100% { background-color: #ff0000; }
-    }
-
-
-    main {
+    
+    .project-title {
+      font-family: 'VT323', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
       display: flex;
-      flex-direction: column;
-      padding-bottom: 20px;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      color: #7dd3fc; /* cyan */
     }
+    
+    .project-title .emoji {
+      font-size: 1.3rem;
+    }
+    
+    .project-desc {
+      font-style: italic;
+      color: #bbb;
+    }
+
+    /* Blog section */
+    #blog p {
+      font-style: italic;
+      color: #888;
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
     footer {
       text-align: center;
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 4rem;
+    }
+
+    /* Dark mode toggle button */
+    button#modeToggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: #444;
+      color: #ddd;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: monospace;
+      font-weight: 600;
+      transition: background-color 0.3s, color 0.3s;
+      z-index: 1000;
+    }
+    
+    body.light-mode button#modeToggle {
+      background-color: #ddd;
+      color: #333;
+    }
+
+    /* Light mode styles */
+    body.light-mode {
+      background: #f5f3eb;
+      color: #333;
+    }
+    
+    body.light-mode h1#main-title {
+      color: #d946ef; /* pink-600 */
+    }
+    
+    body.light-mode h2#about-title {
+      color: #84cc16; /* lime-500 */
+    }
+    
+    body.light-mode nav a {
+      color: #0e7490; /* cyan-700 */
+    }
+    
+    body.light-mode nav a:hover {
+      color: #0369a1; /* cyan-800 */
+    }
+    
+    body.light-mode .project-card {
+      background: #e7e5e4;
+      color: #444;
+      border: 1px solid #cfcfcf;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    }
+    
+    body.light-mode .project-card:hover {
+      background: #d6d3d1;
+      border-color: #22d3ee;
+      box-shadow: 0 4px 12px rgb(34 211 238 / 0.3);
+      color: #222;
+    }
+    
+    body.light-mode .project-title {
+      color: #0891b2;
+    }
+    
+    body.light-mode .project-desc {
+      color: #555;
+    }
+    
+    body.light-mode footer {
+      color: #999;
+    }
+
+    /* Modal styles */
+    #projectModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      z-index: 1500;
+      overflow-y: auto;
+    }
+    
+    #projectModal.active {
+      display: flex;
+    }
+    
+    #projectModal .modal-content {
+      background: #111;
+      border-radius: 1rem;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+      color: #eee;
+      font-family: 'Courier New', monospace;
+      position: relative;
+    }
+    
+    #projectModal .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: #7dd3fc;
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1;
+      transition: color 0.3s;
+    }
+    
+    #projectModal .modal-close:hover {
+      color: #22d3ee;
+    }
+    
+    #projectModal .modal-title {
+      font-family: 'VT323', monospace;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #7dd3fc;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    
+    #projectModal .modal-desc {
+      font-style: italic;
+      color: #bbb;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    
+    #projectModal img, #projectModal video {
+      border-radius: 8px;
+      max-width: 100%;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    
+    #projectModal p a {
+      color: #22d3ee;
+      text-decoration: underline;
+    }
+    
+    #projectModal p a:hover {
+      color: #0ea5e9;
     }
   </style>
 </head>
-<body>
-  <main class="content-container">
-  <header style="padding-bottom: 50px;">
-	  <marquee id = "localTime" style = "font-family: Courier; font-size: 10px;"></marquee>
-    <h1>michaelcorduroy ツ</h1>
-    <p>have fun.</p>
-    <nav>
-      <ul>
-        <li><a href="projects.html">projects</a></li>
-        <li><a href="art.html">art</a></li>
-        <li><a href="about.html">about</a></li>
-        <li><a href="#contact" id="toggle-animation">party mode</a></li>
-      </ul>
-    </nav>
+
+<body class="p-4 md:p-8">
+  <button id="modeToggle">☀️  </button>
+
+  <!-- Header -->
+  <header class="text-center mb-10">
+    <h1 id="main-title" class="text-5xl md:text-7xl">michaelcorduroy</h1>
+    <p class="text-sm mt-2 text-gray-400">"online" <span class="blinker">◉</span></p>
   </header>
 
-<div style="padding-bottom: 20px;">
-      <p>[02-03-2025 10:51PM Est]</p>
-      <img style="height:400px" src="res/hoboglyphs.webp">
-    </div>
+  <!-- Navigation -->
+  <nav class="flex flex-wrap justify-center gap-4 text-sm md:text-base underline mb-8">
+    <a href="#about">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="blog.html">Blog</a>
+    <a href="art.html">Art</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-<div style="padding-bottom: 20px;">
-      <p>[1-16-2025 5:45PM EST]</p>
-      <p style="font-family: Courier; font-weight: 50;">"Mathematics is the supreme nostalgia" - Michael Marcus </p>
-      <video style="width:70%;height:auto;" src="res/wakingup.mov" autoplay playsinline loop muted></video>
+  <!-- About Me -->
+  <section id="about" class="mb-12 max-w-3xl mx-auto">
+    <h2 id="about-title" class="text-3xl mb-2">About Me</h2>
+    <img id="greeting-gif" src="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" alt="Greeting animation">
+    <p>
+      I make strange software, surreal games, and experimental tools. Founder of 
+      <span class="text-pink-400 dark:text-pink-500">Breadwinner</span>, creator of
+      <span class="text-cyan-400 dark:text-cyan-500">Conjure</span> and 
+      <span class="text-indigo-400 dark:text-indigo-500">Severe</span>. 
+      I want to change how people experience computers.
+    </p>
+  </section>
 
-      <p style="font-family: Courier;">Been working on Breadwinner, the first full length videogame. This scene is an example of what can happen when waking up with high "entropy". The goal of the game will be to manage your entropy based on the day to day decisions...</p>
+  <!-- Projects -->
+  <section id="projects" class="mb-12 max-w-3xl mx-auto">
+    <h2 class="text-3xl mb-2 text-cyan-400">Projects</h2>
+    <div class="projects-container">
+      <div class="project-card" onclick="openModal('Breadwinner')">
+        <div class="project-title">
+          <span class="emoji">🍞</span>Breadwinner
+        </div>
+        <div class="project-desc">
+          A surreal dream job simulator exploring work, dreams, and entropy.
+        </div>
+      </div>
+      
+      <div class="project-card" onclick="openModal('Conjure')">
+        <div class="project-title">
+          <span class="emoji">🔍</span>Conjure
+        </div>
+        <div class="project-desc">
+          A macOS Spotlight alternative with fuzzy search, multitasking, and voice.
+        </div>
+      </div>
+      
+      <div class="project-card" onclick="openModal('Severe')">
+        <div class="project-title">
+          <span class="emoji">🎛️</span>Severe
+        </div>
+        <div class="project-desc">
+          A 3D DAW that redefines music production through spatial audio and abstraction.
+        </div>
+      </div>
+    <div class="project-card" onclick="openModal('MLExperiments')">
+        <div class="project-title">
+          <span class="emoji">📈</span>Machine Learning Experiments
+        </div>
+        <div class="project-desc">
+          Collection of ML classification & regression experiments done as coursework and recreationally. </div>
+      </div>
+      <a href="projects.html" class="text-cyan-400 underline">→ View Others..</a>
     </div>
+  </section>
 
-    <div style="padding-bottom: 20px;">
-      <p>[12-31-2024 10:15PM EST]</p>
-      <p style="font-family: Courier; font-weight: 50;">2025 is here and we're BRINGING BACK FUN SOFTWARE. All software should feel like you're playing a video game now, even if it's not a videogame. Boring software is so over. Let's make things interesting.</p>
-    </div>
-    <div style="padding-bottom: 20px;">
-      <p>[07-24-2024 1:44PM EST]</p>
-      <p style="font-family: Courier; font-weight: 50;">i recently wrote an article for a good friend's blog. it references Conway's Game of life and explores the similarities between modern technology and biology.</p>
-      <p style="font-family: Courier;">you can play the version of Conway's Game of Life i wrote in js <a href="xanadu.html">here</a></p>
-    </div>
-    <div style="padding-bottom: 20px;">
-      <p>[08-09-2024 10:23PM EST]</p>
-      <p style="font-family: Courier; font-weight: 50;">i've been coming to this song for tranquility recently. Sadly some of the best synths i've heard were a product of Ethiopian music censorship in the 80's</p>
-      <p style="font-family: Courier;">(Song: <a href="https://open.spotify.com/track/1ivUwqx8QXtteFsxAOF5X1?si=8c20f60363494125">Anchi Bale Game - Admas</a>)</p>
-    </div>
-    <div style="padding-bottom: 20px;">
-      <p>[07-24-2024 12:01PM EST]</p>
-      <p style="font-family: Courier; font-weight: 50;">i hate when the culmination of 8 hours work runs into a paywall</p>
-    </div>
-    <div style="padding-bottom: 20px;">
-      <p>[07-22-2024 4:44PM EST]</p>
-      <img style="height:400px" src="res/stargate1.jpg">
-      <p style="font-family: Courier; font-weight: 50;">stargate_1, home sweet home</p>
-    </div>
+  <!-- Blog -->
+  <section id="blog" class="mb-12 max-w-3xl mx-auto">
+  </section>
 
-    <section id="contact">
-      <a href="https://instagram.com/michaelcorduroy">ig</a> 
-      <a href="https://x.com/michaelcorduroy">twt</a>
-    </section>
-  </main>
+  <!-- Now Playing -->
+  <section id="now-playing" class="mb-12 max-w-3xl mx-auto">
+    <h2 class="text-3xl mb-2 text-cyan-400">Lately Played🎵🎧</h2>
+    <p class ="text-sm text-gray-400">Important: For a better experience, press <span class="text-red-400 dark:text-red-500">shuffle</span> when listening to any shared playlists.</p>
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5rezWdb0V40jcJkAfMsV9W?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </section>
+
+  <!-- Blog -->
+  <section id="blog" class="mb-12 max-w-3xl mx-auto">
+	  <h2 class="text-3xl mb-2 text-cyan-400">Blog</h2>
+	  <iframe src = "blog.html" width="100%" height="600" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </section>
+
+  <!-- Guestbook -->
+  <section id="contact" class="mb-12 max-w-3xl mx-auto">
+    <h2 class="text-3xl mb-2 text-cyan-400">Contact</h2>
+    <p>
+      Shoot me a message on 
+      <u><a href="https://x.com/entropyfiend" target="_blank">X</a></u>
+      or maybe <u><a href="https://instagram.com/michaelcorduroy" target="_blank">instagram</a></u>
+      or just leave a note 
+      <u><a href="mailto:corduroymichael@protonmail.com">via email</a>.</u>
+    </p>
+  </section>
+
+  <!-- Modal -->
+  <div id="projectModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div id="modalMedia"></div>
+      <p id="modalLinks"></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
   <footer>
-    <p>© 2025 michaelcorduroy</p>
+	  &copy; 2025 michaelcorduroy. <a href="#top"> ☝️top</a>  :)
   </footer>
 
   <script>
-    var party_mode = false;
-
-    document.getElementById('toggle-animation').addEventListener('click', function(e) {
-      e.preventDefault(); // Prevent default anchor behavior
-      document.querySelector('.content-container').classList.toggle('rainbow-bg');
-      if(party_mode){
-        this.innerHTML = "party mode";
-        party_mode = false;
-      } else {
-        this.innerHTML = "normal mode";
-        party_mode = true;
-      }
+    // Dark mode toggle functionality
+    const modeToggle = document.getElementById('modeToggle');
+    modeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      modeToggle.textContent = document.body.classList.contains('light-mode') 
+        ? '🌙' 
+        : '☀️';
     });
 
-    var localTime = document.getElementById('localTime');
-    // update time on interval
-    setInterval(function() {
-      var now = new Date();
-      localTime.innerHTML = now;
-    }, 1000); // update every second
-    
+    // Modal functionality
+    const modal = document.getElementById('projectModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalMedia = document.getElementById('modalMedia');
+    const modalLinks = document.getElementById('modalLinks');
+
+    // Project data
+    const projectData = {
+      "Breadwinner": {
+        title: "🍞 Breadwinner",
+	      desc: "A surreal dream job simulator. By day, you work; by night, you dream.",
+        media: "<video src='srcs/wakingup.mov' alt='Breadwinner preview' loop autoplay muted playsinline />",
+      },
+      "Conjure": {
+        title: "🔍 Conjure",
+        desc: "A modern Spotlight alternative. Blazingly fast fuzzy search, voice control, and file manipulation.",
+        media: "<img src='https://your-conjure-screenshot.png' alt='Conjure screenshot' />",
+        links: "<a href='conjure.html' target='_blank'>Visit site</a>"
+      },
+      "Severe": {
+        title: "🎛️ Severe",
+        desc: "A 3D DAW redefining music creation with space-aware interfaces and experimental workflow.",
+        media: "<video src='srcs/severedemo2.mp4' alt='Severe preview' loop autoplay muted playsinline/>",
+        links: "<a href='severe.html' target='_blank'>Check it out</a>"
+      },
+	"MLExperiments": {
+		title: "📈 ML Experiments",
+		desc: "A collection of ML classification & regression experiments done as coursework and recreationally using Scikit-learn and Torch Python libraries.",
+		media: "<img src='srcs/mlexps.png' alt='ML Experiments gif' />",
+		links: "<a href='mltesting.html' target='_blank'>Learn more</a>"
+
+
+	}
+    };
+
+    // Open modal function
+    function openModal(projectKey) {
+      const data = projectData[projectKey];
+      if (data) {
+        modalTitle.innerHTML = data.title;
+        modalDesc.innerText = data.desc;
+        modalMedia.innerHTML = data.media;
+        modalLinks.innerHTML = data.links;
+        modal.classList.add('active');
+      }
+    }
+
+    // Close modal function
+    function closeModal() {
+      modal.classList.remove('active');
+    }
   </script>
 </body>
 </html>
-
